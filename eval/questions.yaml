@@ -1,0 +1,131 @@
+# Evaluation set for AskDarwin.
+#
+# Method: execution accuracy against gold queries. Each question has a hand-written
+# reference SQL that is the ground truth. We run the model's query and the gold query
+# over the same data and compare the result sets, ignoring column names and row order.
+#
+# `category` maps to the question taxonomy that defines "done" for this prototype.
+
+- id: q01
+  category: aggregation
+  question: How many employees are there in total?
+  gold_sql: SELECT COUNT(*) AS total_employees FROM employees
+
+- id: q02
+  category: filtered_aggregation
+  question: How many employees are currently active?
+  gold_sql: SELECT COUNT(*) AS active_employees FROM employees WHERE employment_status = 'Active'
+
+- id: q03
+  category: group_by
+  question: How many active employees are there in each department?
+  gold_sql: >
+    SELECT department, COUNT(*) AS active_employees
+    FROM employees WHERE employment_status = 'Active'
+    GROUP BY department
+
+- id: q04
+  category: ranking
+  question: Which 5 departments have the highest number of exits?
+  gold_sql: >
+    SELECT department, COUNT(*) AS exits
+    FROM employees WHERE employment_status = 'Exited'
+    GROUP BY department ORDER BY exits DESC LIMIT 5
+
+- id: q05
+  category: aggregation
+  question: What is the average tenure in years of employees who have exited?
+  gold_sql: >
+    SELECT AVG(date_diff('day', date_of_joining, exit_date) / 365.25) AS avg_tenure_years
+    FROM employees WHERE exit_date IS NOT NULL
+
+- id: q06
+  category: trend
+  question: Show the total number of days absent for each month.
+  gold_sql: >
+    SELECT month, SUM(days_absent) AS total_days_absent
+    FROM attendance GROUP BY month ORDER BY month
+
+- id: q07
+  category: cross_file_join
+  question: What is the average performance rating in each department?
+  gold_sql: >
+    SELECT e.department, AVG(p.rating) AS avg_rating
+    FROM employees e JOIN performance p ON e.employee_id = p.employee_id
+    GROUP BY e.department
+
+- id: q08
+  category: group_by
+  question: How many candidates joined the company from each recruitment source?
+  gold_sql: >
+    SELECT source, COUNT(*) AS joined_count
+    FROM recruitment WHERE joined_flag = 'Yes' GROUP BY source
+
+- id: q09
+  category: ranking
+  question: Which location has the most active employees?
+  gold_sql: >
+    SELECT location, COUNT(*) AS active_employees
+    FROM employees WHERE employment_status = 'Active'
+    GROUP BY location ORDER BY active_employees DESC LIMIT 1
+
+- id: q10
+  category: cross_file_join
+  question: What is the average number of days absent per record in each department?
+  gold_sql: >
+    SELECT e.department, AVG(a.days_absent) AS avg_days_absent
+    FROM employees e JOIN attendance a ON e.employee_id = a.employee_id
+    GROUP BY e.department
+
+- id: q11
+  category: comparison
+  question: What is the attrition rate as a percentage for each department?
+  gold_sql: >
+    SELECT department,
+           COUNT(*) FILTER (WHERE employment_status = 'Exited') * 100.0 / COUNT(*) AS attrition_rate_pct
+    FROM employees GROUP BY department
+
+- id: q12
+  category: comparison
+  question: Compare the average performance rating of employees flagged as High potential versus Standard.
+  gold_sql: SELECT potential_flag, AVG(rating) AS avg_rating FROM performance GROUP BY potential_flag
+
+- id: q13
+  category: filtered_aggregation
+  question: How many employees joined in 2025?
+  gold_sql: >
+    SELECT COUNT(*) AS employees_joined FROM employees
+    WHERE EXTRACT(year FROM date_of_joining) = 2025
+
+- id: q14
+  category: cross_file_join
+  question: What is the offer-to-join conversion rate as a percentage for each recruitment source?
+  gold_sql: >
+    SELECT source,
+           COUNT(*) FILTER (WHERE joined_flag = 'Yes') * 100.0 / COUNT(*) AS conversion_pct
+    FROM recruitment GROUP BY source
+
+- id: q15
+  category: cross_file_join
+  question: What is the total current base salary by department for active employees?
+  gold_sql: >
+    WITH latest AS (
+      SELECT employee_id, base_salary,
+             ROW_NUMBER() OVER (PARTITION BY employee_id ORDER BY effective_month DESC) AS rn
+      FROM compensation
+    )
+    SELECT e.department, SUM(l.base_salary) AS total_base_salary
+    FROM employees e JOIN latest l ON e.employee_id = l.employee_id AND l.rn = 1
+    WHERE e.employment_status = 'Active'
+    GROUP BY e.department
+
+# Questions the product should decline rather than guess at.
+- id: r01
+  category: refusal
+  question: What is the average salary of my neighbour's dog?
+  expect_refusal: true
+
+- id: r02
+  category: refusal
+  question: Which employees are most likely to resign next quarter?
+  expect_refusal: true

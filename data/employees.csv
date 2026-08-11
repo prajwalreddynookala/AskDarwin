@@ -1,0 +1,421 @@
+employee_id,full_name,department,location,grade,gender,manager_id,date_of_joining,exit_date,exit_reason,employment_status
+EMP0001,Ritu Banerjee,Engineering,Mumbai,L1,Female,EMP0295,2020-10-09,2023-09-26,Performance,Exited
+EMP0002,Shreya Malhotra,Engineering,Hyderabad,L3,Female,EMP0132,2022-08-05,2025-07-04,Better opportunity,Exited
+EMP0003,Siddharth Verma,Sales,Bengaluru,L2,Male,EMP0221,2019-12-21,2026-01-09,Relocation,Exited
+EMP0004,Kabir Kapoor,Sales,Hyderabad,L4,Female,EMP0274,2025-08-31,,,Active
+EMP0005,Tarun Menon,Engineering,Remote,L4,Male,,2019-03-06,2020-05-31,Higher education,Exited
+EMP0006,Shreya Kulkarni,Engineering,Hyderabad,L3,Female,EMP0005,2019-09-27,,,Active
+EMP0007,Lakshmi Banerjee,Customer Success,Remote,L1,Female,EMP0336,2024-09-11,,,Active
+EMP0008,Nikhil Iyer,Operations,Bengaluru,L3,Male,EMP0061,2020-04-08,2021-04-20,Compensation,Exited
+EMP0009,Aarav Kulkarni,Finance,Hyderabad,L3,Male,EMP0053,2026-01-31,,,Active
+EMP0010,Kavya Iyer,Engineering,Hyderabad,L3,Male,EMP0081,2022-09-28,,,Active
+EMP0011,Kavya Shetty,Human Resources,Hyderabad,L2,Female,EMP0032,2023-01-31,,,Active
+EMP0012,Kabir Verma,Marketing,Hyderabad,L4,Male,EMP0373,2020-10-17,2023-08-22,Personal reasons,Exited
+EMP0013,Meera Kulkarni,Human Resources,Bengaluru,L1,Male,EMP0011,2023-07-13,,,Active
+EMP0014,Aarav Reddy,Sales,Remote,L1,Female,EMP0351,2022-09-16,,,Active
+EMP0015,Rohit Nair,Engineering,Remote,L5,Female,,2020-03-27,,,Active
+EMP0016,Bhavya Gupta,Sales,Mumbai,L5,Male,EMP0095,2021-07-13,2023-03-16,Involuntary - restructuring,Exited
+EMP0017,Neha Reddy,Engineering,Mumbai,L4,Female,EMP0005,2019-10-04,2022-05-30,Compensation,Exited
+EMP0018,Harini Sharma,Customer Success,Hyderabad,L3,Male,EMP0275,2025-06-15,2026-01-06,Compensation,Exited
+EMP0019,Vidya Iyer,Engineering,Hyderabad,L2,Male,EMP0006,2021-08-17,,,Active
+EMP0020,Ritu Nair,Sales,Bengaluru,L4,Female,EMP0254,2022-06-01,2025-10-06,Compensation,Exited
+EMP0021,Nandini Joshi,Sales,Mumbai,L1,Male,EMP0269,2025-10-24,,,Active
+EMP0022,Harini Menon,Engineering,Bengaluru,L3,Female,EMP0392,2020-09-02,2025-03-20,Compensation,Exited
+EMP0023,Rahul Malhotra,Engineering,Hyderabad,L1,Male,EMP0401,2022-10-22,,,Active
+EMP0024,Lakshmi Pillai,Engineering,Bengaluru,L1,Female,EMP0159,2023-11-06,,,Active
+EMP0025,Aarav Iyer,Sales,Hyderabad,L4,Female,EMP0400,2023-08-31,,,Active
+EMP0026,Pooja Pillai,Sales,Remote,L1,Male,EMP0072,2023-01-29,,,Active
+EMP0027,Vidya Nair,Customer Success,Hyderabad,L1,Male,EMP0093,2025-09-04,,,Active
+EMP0028,Chetan Shetty,Customer Success,Remote,L3,Male,EMP0050,2025-03-24,,,Active
+EMP0029,Sanjana Reddy,Engineering,Hyderabad,L2,Male,EMP0239,2024-08-14,,,Active
+EMP0030,Nikhil Banerjee,Sales,Hyderabad,L5,Male,EMP0095,2021-03-10,2025-06-04,Compensation,Exited
+EMP0031,Siddharth Chatterjee,Customer Success,Delhi NCR,L3,Male,,2019-03-25,,,Active
+EMP0032,Zoya Chatterjee,Human Resources,Delhi NCR,L2,Male,EMP0420,2020-09-17,2025-12-31,Relocation,Exited
+EMP0033,Ishaan Kulkarni,Engineering,Hyderabad,L1,Female,EMP0100,2021-03-24,2023-01-10,Personal reasons,Exited
+EMP0034,Rohit Reddy,Sales,Pune,L1,Male,EMP0016,2022-05-16,2023-01-05,Better opportunity,Exited
+EMP0035,Shreya Kapoor,Marketing,Pune,L3,Male,EMP0373,2023-07-07,,,Active
+EMP0036,Chetan Pillai,Sales,Mumbai,L3,Male,EMP0016,2026-02-19,,,Active
+EMP0037,Dhruv Nair,Operations,Bengaluru,L6,Male,EMP0387,2025-12-05,,,Active
+EMP0038,Aditi Banerjee,Customer Success,Bengaluru,L3,Male,EMP0058,2025-05-07,2026-07-20,Personal reasons,Exited
+EMP0039,Lakshmi Kapoor,Sales,Pune,L4,Female,EMP0277,2026-05-13,,,Active
+EMP0040,Bhavya Malhotra,Marketing,Hyderabad,L4,Female,EMP0264,2021-12-22,2022-08-16,Personal reasons,Exited
+EMP0041,Uma Iyer,Marketing,Remote,L3,Female,EMP0035,2026-06-26,,,Active
+EMP0042,Tanvi Sharma,Operations,Remote,L1,Male,EMP0060,2024-07-11,2025-01-19,Performance,Exited
+EMP0043,Bhavya Mehta,Product,Bengaluru,L2,Female,EMP0356,2023-07-12,,,Active
+EMP0044,Harini Mehta,Operations,Mumbai,L2,Male,EMP0325,2025-04-01,,,Active
+EMP0045,Sanjana Shetty,Engineering,Hyderabad,L5,Female,EMP0417,2022-12-02,,,Active
+EMP0046,Rohit Pillai,Engineering,Bengaluru,L3,Female,EMP0006,2021-11-19,,,Active
+EMP0047,Kabir Kulkarni,Engineering,Hyderabad,L5,Female,EMP0077,2022-12-26,,,Active
+EMP0048,Bhavya Rao,Product,Delhi NCR,L2,Female,EMP0165,2022-03-16,,,Active
+EMP0049,Pooja Menon,Engineering,Hyderabad,L2,Male,EMP0148,2023-07-23,2024-10-14,Better opportunity,Exited
+EMP0050,Kabir Kapoor,Customer Success,Hyderabad,L3,Female,EMP0340,2023-08-22,,,Active
+EMP0051,Uma Malhotra,Operations,Remote,L1,Female,EMP0419,2021-08-25,2023-05-10,Performance,Exited
+EMP0052,Bhavya Nair,Engineering,Bengaluru,L1,Male,EMP0196,2021-05-05,,,Active
+EMP0053,Yash Rao,Finance,Remote,L4,Male,EMP0130,2021-08-12,2024-04-17,Better opportunity,Exited
+EMP0054,Aditi Gupta,Engineering,Bengaluru,L1,Female,EMP0211,2019-11-22,2024-08-14,Relocation,Exited
+EMP0055,Vidya Rao,Engineering,Delhi NCR,L3,Female,EMP0006,2022-11-17,,,Active
+EMP0056,Vidya Mehta,Sales,Hyderabad,L6,Female,EMP0079,2024-11-09,2026-04-18,Better opportunity,Exited
+EMP0057,Vidya Desai,Engineering,Remote,L1,Female,EMP0329,2024-07-21,,,Active
+EMP0058,Manish Mehta,Customer Success,Remote,L3,Male,EMP0161,2020-09-10,2022-04-14,Better opportunity,Exited
+EMP0059,Meera Malhotra,Marketing,Bengaluru,L2,Male,EMP0373,2021-11-18,2024-01-13,Better opportunity,Exited
+EMP0060,Siddharth Gupta,Operations,Remote,L1,Female,EMP0326,2022-06-26,2024-02-07,Better opportunity,Exited
+EMP0061,Aditi Reddy,Operations,Hyderabad,L5,Male,,2019-03-17,2020-05-17,Better opportunity,Exited
+EMP0062,Shreya Gupta,Engineering,Hyderabad,L3,Female,EMP0017,2020-09-08,,,Active
+EMP0063,Kabir Pillai,Marketing,Bengaluru,L1,Male,,2019-01-24,,,Active
+EMP0064,Aditi Nair,Customer Success,Pune,L3,Male,EMP0127,2023-12-10,,,Active
+EMP0065,Kabir Verma,Product,Hyderabad,L1,Male,,2019-04-04,,,Active
+EMP0066,Tanvi Iyer,Engineering,Hyderabad,L6,Female,,2022-09-08,,,Active
+EMP0067,Rohit Malhotra,Sales,Delhi NCR,L4,Male,EMP0068,2019-04-03,2021-03-11,Better opportunity,Exited
+EMP0068,Meera Nair,Sales,Mumbai,L6,Male,,2019-01-28,2022-02-12,Better opportunity,Exited
+EMP0069,Siddharth Desai,Engineering,Mumbai,L4,Female,EMP0017,2020-02-04,2020-11-06,Performance,Exited
+EMP0070,Rahul Malhotra,Engineering,Bengaluru,L2,Male,EMP0081,2025-08-15,,,Active
+EMP0071,Lakshmi Malhotra,Engineering,Pune,L1,Female,EMP0273,2019-12-26,,,Active
+EMP0072,Omkar Verma,Sales,Pune,L1,Female,EMP0068,2019-08-13,2022-02-07,Compensation,Exited
+EMP0073,Varun Bose,Engineering,Mumbai,L5,Male,EMP0417,2025-10-20,,,Active
+EMP0074,Uma Reddy,Engineering,Pune,L2,Female,EMP0005,2019-03-08,2025-10-19,Better opportunity,Exited
+EMP0075,Sanjana Verma,Product,Delhi NCR,L2,Male,EMP0249,2020-08-06,2021-09-27,Compensation,Exited
+EMP0076,Rohit Mehta,Operations,Hyderabad,L4,Male,EMP0061,2024-03-13,,,Active
+EMP0077,Nandini Kapoor,Engineering,Mumbai,L5,Male,EMP0414,2020-12-22,,,Active
+EMP0078,Bhavya Gupta,Finance,Hyderabad,L3,Male,EMP0158,2026-01-27,,,Active
+EMP0079,Yash Pillai,Sales,Hyderabad,L6,Male,EMP0068,2019-02-21,2025-07-28,Involuntary - restructuring,Exited
+EMP0080,Kabir Mehta,Human Resources,Bengaluru,L3,Female,EMP0212,2025-05-02,,,Active
+EMP0081,Uma Kapoor,Engineering,Bengaluru,L4,Male,EMP0069,2021-08-18,2025-06-13,Compensation,Exited
+EMP0082,Neha Kulkarni,Marketing,Hyderabad,L3,Female,EMP0207,2020-08-04,2025-07-24,Compensation,Exited
+EMP0083,Dhruv Rao,Engineering,Delhi NCR,L5,Female,EMP0015,2022-03-31,,,Active
+EMP0084,Tarun Gupta,Engineering,Hyderabad,L5,Male,EMP0015,2022-12-24,,,Active
+EMP0085,Kabir Desai,Human Resources,Bengaluru,L3,Female,EMP0346,2023-12-06,2025-08-20,Involuntary - restructuring,Exited
+EMP0086,Ananya Chatterjee,Sales,Hyderabad,L4,Female,EMP0095,2021-07-28,2025-06-06,Performance,Exited
+EMP0087,Deepika Iyer,Marketing,Hyderabad,L2,Male,EMP0207,2020-09-28,,,Active
+EMP0088,Nandini Joshi,Finance,Bengaluru,L2,Male,EMP0411,2025-12-28,,,Active
+EMP0089,Kavya Kulkarni,Finance,Pune,L4,Male,EMP0053,2023-11-27,,,Active
+EMP0090,Lakshmi Nair,Customer Success,Pune,L2,Male,EMP0058,2022-02-07,2024-07-22,Performance,Exited
+EMP0091,Tarun Kapoor,Sales,Mumbai,L2,Male,EMP0003,2021-10-05,2024-12-01,Better opportunity,Exited
+EMP0092,Farhan Joshi,Engineering,Bengaluru,L1,Female,EMP0047,2025-01-09,,,Active
+EMP0093,Siddharth Desai,Customer Success,Bengaluru,L5,Male,EMP0340,2024-12-24,2026-01-06,Higher education,Exited
+EMP0094,Farhan Reddy,Engineering,Remote,L1,Female,EMP0366,2021-02-22,,,Active
+EMP0095,Chetan Banerjee,Sales,Hyderabad,L5,Female,EMP0079,2020-04-10,2023-01-12,Performance,Exited
+EMP0096,Vikram Rao,Product,Remote,L1,Male,EMP0165,2023-03-12,2024-05-04,Performance,Exited
+EMP0097,Aarav Rao,Engineering,Bengaluru,L4,Female,EMP0017,2023-06-01,,,Active
+EMP0098,Kavya Chatterjee,Customer Success,Pune,L2,Female,EMP0144,2025-03-27,,,Active
+EMP0099,Kavya Bose,Human Resources,Hyderabad,L2,Male,EMP0032,2021-01-03,,,Active
+EMP0100,Kabir Gupta,Engineering,Bengaluru,L1,Female,EMP0006,2020-02-14,,,Active
+EMP0101,Kavya Rao,Engineering,Remote,L3,Female,EMP0247,2025-12-15,,,Active
+EMP0102,Rohit Malhotra,Finance,Bengaluru,L1,Male,EMP0150,2024-09-14,2026-06-18,Compensation,Exited
+EMP0103,Dhruv Sharma,Engineering,Delhi NCR,L3,Female,EMP0101,2026-06-04,,,Active
+EMP0104,Tanvi Bose,Sales,Hyderabad,L4,Male,EMP0068,2021-01-31,,,Active
+EMP0105,Farhan Patel,Sales,Hyderabad,L2,Male,EMP0357,2023-10-11,,,Active
+EMP0106,Harini Shetty,Sales,Hyderabad,L2,Male,EMP0030,2022-06-18,,,Active
+EMP0107,Farhan Menon,Sales,Pune,L2,Female,EMP0231,2023-05-11,,,Active
+EMP0108,Arjun Banerjee,Engineering,Remote,L4,Female,EMP0265,2025-09-25,,,Active
+EMP0109,Chetan Rao,Engineering,Bengaluru,L2,Male,EMP0083,2022-05-29,2026-02-06,Better opportunity,Exited
+EMP0110,Manish Rao,Engineering,Delhi NCR,L1,Female,EMP0005,2019-04-24,2022-08-27,Compensation,Exited
+EMP0111,Yash Rao,Customer Success,Bengaluru,L1,Female,EMP0378,2025-06-02,,,Active
+EMP0112,Nandini Chatterjee,Sales,Bengaluru,L5,Female,EMP0030,2021-11-05,,,Active
+EMP0113,Kabir Pillai,Sales,Hyderabad,L1,Female,EMP0208,2026-02-13,,,Active
+EMP0114,Pranav Mehta,Human Resources,Mumbai,L6,Male,,2021-05-29,2022-03-04,Higher education,Exited
+EMP0115,Jaya Verma,Marketing,Pune,L3,Male,EMP0143,2023-03-29,,,Active
+EMP0116,Ananya Rao,Sales,Remote,L3,Male,EMP0067,2019-10-02,2025-10-08,Performance,Exited
+EMP0117,Vikram Bose,Engineering,Hyderabad,L4,Male,EMP0069,2020-02-06,,,Active
+EMP0118,Kavya Bose,Engineering,Hyderabad,L3,Male,EMP0132,2022-04-14,,,Active
+EMP0119,Bhavya Chatterjee,Sales,Hyderabad,L1,Female,EMP0034,2023-07-21,2025-04-08,Relocation,Exited
+EMP0120,Omkar Patel,Customer Success,Pune,L1,Male,EMP0168,2021-07-08,,,Active
+EMP0121,Rhea Verma,Engineering,Remote,L2,Female,EMP0293,2022-07-18,2026-05-01,Personal reasons,Exited
+EMP0122,Rhea Banerjee,Finance,Bengaluru,L3,Male,EMP0175,2023-02-09,,,Active
+EMP0123,Chetan Menon,Product,Pune,L2,Male,EMP0375,2021-10-13,,,Active
+EMP0124,Omkar Rao,Customer Success,Pune,L3,Female,EMP0214,2024-12-23,,,Active
+EMP0125,Lakshmi Chatterjee,Engineering,Mumbai,L1,Male,EMP0149,2026-05-22,,,Active
+EMP0126,Omkar Iyer,Sales,Hyderabad,L3,Female,EMP0095,2021-03-02,,,Active
+EMP0127,Yash Sharma,Customer Success,Hyderabad,L6,Male,EMP0340,2023-03-31,2025-10-18,Better opportunity,Exited
+EMP0128,Aarav Verma,Customer Success,Pune,L1,Female,EMP0031,2021-01-20,2023-07-11,Better opportunity,Exited
+EMP0129,Zoya Banerjee,Sales,Hyderabad,L1,Female,EMP0221,2019-12-22,2023-08-24,Compensation,Exited
+EMP0130,Dhruv Iyer,Finance,Bengaluru,L5,Female,EMP0388,2021-03-27,,,Active
+EMP0131,Nikhil Iyer,Operations,Hyderabad,L2,Female,EMP0145,2025-02-14,,,Active
+EMP0132,Aarav Mehta,Engineering,Hyderabad,L4,Male,EMP0117,2021-01-22,,,Active
+EMP0133,Ishaan Banerjee,Engineering,Hyderabad,L4,Female,EMP0017,2023-03-07,,,Active
+EMP0134,Bhavya Reddy,Engineering,Pune,L2,Female,EMP0006,2022-08-26,,,Active
+EMP0135,Jaya Rao,Engineering,Remote,L4,Female,EMP0253,2023-07-16,2025-11-16,Performance,Exited
+EMP0136,Sanjana Kulkarni,Product,Bengaluru,L1,Male,EMP0227,2025-12-18,2026-06-28,Better opportunity,Exited
+EMP0137,Bhavya Banerjee,Engineering,Mumbai,L2,Male,EMP0295,2021-12-13,,,Active
+EMP0138,Tarun Nair,Human Resources,Mumbai,L2,Female,EMP0222,2024-10-01,,,Active
+EMP0139,Rohit Desai,Sales,Bengaluru,L4,Male,EMP0112,2024-03-16,,,Active
+EMP0140,Priya Joshi,Finance,Hyderabad,L1,Female,EMP0150,2025-02-23,2026-06-30,Performance,Exited
+EMP0141,Dhruv Reddy,Operations,Bengaluru,L4,Male,EMP0061,2021-06-14,,,Active
+EMP0142,Rhea Kapoor,Customer Success,Pune,L4,Male,,2021-01-08,,,Active
+EMP0143,Gaurav Chatterjee,Marketing,Bengaluru,L5,Male,EMP0365,2021-05-15,2022-03-18,Personal reasons,Exited
+EMP0144,Rahul Patel,Customer Success,Pune,L2,Female,EMP0031,2019-04-26,2020-07-27,Compensation,Exited
+EMP0145,Dhruv Shetty,Operations,Mumbai,L3,Male,EMP0061,2020-02-18,2022-04-12,Better opportunity,Exited
+EMP0146,Arjun Desai,Sales,Delhi NCR,L6,Male,EMP0383,2025-05-18,,,Active
+EMP0147,Kavya Nair,Engineering,Bengaluru,L2,Male,EMP0017,2020-08-04,2024-05-12,Better opportunity,Exited
+EMP0148,Ananya Malhotra,Engineering,Pune,L3,Male,,2019-02-27,,,Active
+EMP0149,Rhea Chatterjee,Engineering,Bengaluru,L4,Female,EMP0253,2026-02-26,,,Active
+EMP0150,Aditi Sharma,Finance,Pune,L3,Male,EMP0263,2022-11-10,,,Active
+EMP0151,Arjun Patel,Customer Success,Pune,L2,Male,EMP0142,2021-12-23,2025-04-07,Better opportunity,Exited
+EMP0152,Rohit Menon,Engineering,Mumbai,L4,Male,EMP0117,2023-09-13,,,Active
+EMP0153,Priya Reddy,Finance,Hyderabad,L4,Male,EMP0053,2022-09-05,,,Active
+EMP0154,Kavya Bose,Sales,Mumbai,L3,Female,EMP0400,2022-08-07,,,Active
+EMP0155,Tarun Kulkarni,Engineering,Mumbai,L4,Female,EMP0265,2024-08-01,,,Active
+EMP0156,Siddharth Pillai,Marketing,Mumbai,L3,Female,EMP0373,2024-04-25,2025-07-18,Compensation,Exited
+EMP0157,Vikram Verma,Engineering,Hyderabad,L1,Male,EMP0005,2020-11-29,2021-07-14,Performance,Exited
+EMP0158,Uma Banerjee,Finance,Hyderabad,L5,Female,EMP0388,2022-11-22,,,Active
+EMP0159,Jaya Kulkarni,Engineering,Pune,L2,Female,EMP0109,2023-08-24,,,Active
+EMP0160,Rahul Bose,Customer Success,Delhi NCR,L3,Female,EMP0340,2021-12-02,2024-07-20,Relocation,Exited
+EMP0161,Tanvi Desai,Customer Success,Bengaluru,L3,Female,EMP0031,2019-08-12,2024-04-13,Higher education,Exited
+EMP0162,Arjun Iyer,Operations,Remote,L2,Female,EMP0008,2020-08-26,,,Active
+EMP0163,Nandini Pillai,Engineering,Pune,L2,Female,EMP0242,2022-10-18,2024-12-14,Better opportunity,Exited
+EMP0164,Zoya Pillai,Sales,Delhi NCR,L1,Male,EMP0072,2019-08-15,2020-08-24,Better opportunity,Exited
+EMP0165,Ritu Banerjee,Product,Hyderabad,L4,Male,EMP0201,2020-06-02,2026-01-16,Better opportunity,Exited
+EMP0166,Dhruv Chatterjee,Engineering,Hyderabad,L1,Male,EMP0054,2022-01-28,,,Active
+EMP0167,Neha Joshi,Finance,Delhi NCR,L1,Female,EMP0381,2019-12-16,,,Active
+EMP0168,Deepika Kapoor,Customer Success,Hyderabad,L1,Male,EMP0191,2021-05-25,2022-02-15,Performance,Exited
+EMP0169,Siddharth Nair,Finance,Remote,L4,Male,EMP0388,2022-11-20,2023-11-15,Compensation,Exited
+EMP0170,Manish Joshi,Marketing,Hyderabad,L4,Female,EMP0365,2022-04-08,2025-10-23,Compensation,Exited
+EMP0171,Kabir Joshi,Finance,Mumbai,L4,Male,EMP0158,2025-01-22,,,Active
+EMP0172,Nandini Iyer,Engineering,Hyderabad,L4,Male,EMP0017,2021-06-14,2022-04-12,Performance,Exited
+EMP0173,Ananya Gupta,Marketing,Hyderabad,L1,Female,EMP0012,2022-02-15,2023-11-07,Better opportunity,Exited
+EMP0174,Jaya Malhotra,Operations,Delhi NCR,L5,Male,EMP0061,2024-05-15,,,Active
+EMP0175,Manish Shetty,Finance,Remote,L3,Male,EMP0311,2021-07-25,,,Active
+EMP0176,Pooja Desai,Sales,Hyderabad,L4,Male,EMP0139,2024-11-29,,,Active
+EMP0177,Kavya Menon,Sales,Hyderabad,L1,Female,EMP0357,2023-09-28,,,Active
+EMP0178,Rahul Kulkarni,Engineering,Hyderabad,L3,Male,EMP0238,2025-07-08,,,Active
+EMP0179,Zoya Menon,Engineering,Remote,L1,Male,EMP0083,2023-12-17,,,Active
+EMP0180,Priya Nair,Engineering,Pune,L1,Female,EMP0273,2020-05-23,2025-02-02,Compensation,Exited
+EMP0181,Kabir Iyer,Finance,Mumbai,L1,Male,EMP0053,2021-11-08,,,Active
+EMP0182,Meera Sharma,Product,Hyderabad,L1,Female,EMP0249,2020-10-07,2026-03-27,Relocation,Exited
+EMP0183,Rhea Menon,Engineering,Bengaluru,L2,Female,EMP0242,2020-10-22,,,Active
+EMP0184,Jaya Gupta,Engineering,Mumbai,L2,Female,EMP0178,2026-04-08,,,Active
+EMP0185,Ishaan Desai,Engineering,Hyderabad,L1,Female,EMP0209,2022-04-15,,,Active
+EMP0186,Deepika Menon,Product,Remote,L4,Male,EMP0165,2020-11-23,2023-09-08,Involuntary - restructuring,Exited
+EMP0187,Omkar Desai,Operations,Bengaluru,L4,Male,EMP0061,2023-07-24,2024-07-18,Performance,Exited
+EMP0188,Rhea Nair,Engineering,Hyderabad,L1,Female,EMP0410,2021-11-28,2024-12-05,Personal reasons,Exited
+EMP0189,Yash Nair,Operations,Hyderabad,L3,Male,EMP0245,2024-07-10,,,Active
+EMP0190,Arjun Joshi,Customer Success,Bengaluru,L1,Female,EMP0321,2020-11-01,2023-12-31,Higher education,Exited
+EMP0191,Deepika Nair,Customer Success,Hyderabad,L1,Male,EMP0144,2020-05-18,,,Active
+EMP0192,Shreya Menon,Finance,Bengaluru,L3,Male,EMP0381,2022-09-12,,,Active
+EMP0193,Kavya Chatterjee,Engineering,Bengaluru,L3,Male,EMP0320,2022-03-24,,,Active
+EMP0194,Manish Malhotra,Finance,Mumbai,L4,Male,EMP0053,2022-02-28,,,Active
+EMP0195,Rohit Pillai,Sales,Pune,L1,Male,EMP0067,2022-02-09,2025-08-31,Personal reasons,Exited
+EMP0196,Neha Bose,Engineering,Bengaluru,L1,Female,EMP0273,2020-11-23,,,Active
+EMP0197,Rhea Bose,Marketing,Hyderabad,L3,Female,EMP0369,2022-01-08,2022-07-23,Performance,Exited
+EMP0198,Meera Sharma,Sales,Pune,L3,Male,EMP0079,2021-04-03,,,Active
+EMP0199,Vidya Nair,Marketing,Hyderabad,L6,Male,EMP0365,2025-04-13,,,Active
+EMP0200,Kabir Kapoor,Finance,Mumbai,L1,Male,EMP0194,2022-09-08,,,Active
+EMP0201,Ishaan Banerjee,Product,Hyderabad,L4,Male,EMP0227,2020-04-17,2025-11-08,Performance,Exited
+EMP0202,Ritu Kulkarni,Sales,Bengaluru,L3,Male,EMP0254,2022-09-02,,,Active
+EMP0203,Priya Rao,Engineering,Bengaluru,L1,Male,EMP0211,2024-07-09,2025-06-02,Relocation,Exited
+EMP0204,Aditi Menon,Marketing,Remote,L1,Male,EMP0369,2019-08-14,2021-12-14,Higher education,Exited
+EMP0205,Neha Sharma,Operations,Hyderabad,L3,Female,EMP0145,2025-05-02,,,Active
+EMP0206,Meera Bose,Sales,Hyderabad,L2,Female,EMP0202,2024-08-18,,,Active
+EMP0207,Meera Nair,Marketing,Mumbai,L3,Male,EMP0248,2020-04-13,2023-03-19,Involuntary - restructuring,Exited
+EMP0208,Zoya Malhotra,Sales,Bengaluru,L2,Female,EMP0269,2023-07-21,,,Active
+EMP0209,Manish Malhotra,Engineering,Pune,L1,Female,EMP0224,2019-05-22,2025-06-20,Compensation,Exited
+EMP0210,Vikram Sharma,Engineering,Hyderabad,L1,Female,EMP0132,2021-03-08,2025-08-28,Compensation,Exited
+EMP0211,Siddharth Menon,Engineering,Delhi NCR,L1,Male,EMP0224,2019-08-14,,,Active
+EMP0212,Harini Joshi,Human Resources,Pune,L3,Male,EMP0346,2023-08-20,2026-02-22,Compensation,Exited
+EMP0213,Jaya Mehta,Finance,Bengaluru,L1,Female,EMP0175,2023-08-31,2025-04-03,Better opportunity,Exited
+EMP0214,Omkar Iyer,Customer Success,Remote,L5,Female,EMP0340,2022-08-08,,,Active
+EMP0215,Zoya Desai,Customer Success,Hyderabad,L4,Male,EMP0214,2024-12-24,,,Active
+EMP0216,Ritu Nair,Sales,Hyderabad,L1,Female,EMP0399,2025-12-19,,,Active
+EMP0217,Aarav Shetty,Customer Success,Bengaluru,L2,Female,EMP0390,2025-06-07,,,Active
+EMP0218,Farhan Verma,Product,Hyderabad,L4,Female,EMP0201,2021-03-26,,,Active
+EMP0219,Meera Malhotra,Marketing,Delhi NCR,L1,Female,EMP0298,2020-12-21,2022-12-09,Better opportunity,Exited
+EMP0220,Manish Chatterjee,Engineering,Bengaluru,L2,Male,EMP0392,2024-12-14,,,Active
+EMP0221,Vikram Chatterjee,Sales,Bengaluru,L2,Female,EMP0079,2019-05-29,,,Active
+EMP0222,Uma Malhotra,Human Resources,Pune,L2,Male,EMP0420,2021-11-22,,,Active
+EMP0223,Tarun Mehta,Engineering,Remote,L3,Female,EMP0382,2024-09-15,,,Active
+EMP0224,Lakshmi Reddy,Engineering,Hyderabad,L2,Male,EMP0005,2019-04-24,,,Active
+EMP0225,Arjun Rao,Human Resources,Hyderabad,L4,Male,EMP0114,2025-10-12,,,Active
+EMP0226,Pranav Gupta,Sales,Bengaluru,L1,Female,EMP0068,2019-10-30,2021-04-16,Performance,Exited
+EMP0227,Tanvi Kapoor,Product,Remote,L4,Female,,2019-07-16,2021-05-15,Better opportunity,Exited
+EMP0228,Sanjana Patel,Customer Success,Delhi NCR,L1,Male,EMP0142,2025-04-08,,,Active
+EMP0229,Neha Gupta,Finance,Remote,L1,Male,EMP0158,2024-05-01,,,Active
+EMP0230,Tarun Reddy,Engineering,Mumbai,L4,Female,EMP0265,2026-06-03,,,Active
+EMP0231,Tarun Verma,Sales,Delhi NCR,L3,Male,EMP0233,2022-01-07,2025-07-19,Performance,Exited
+EMP0232,Ananya Nair,Engineering,Pune,L1,Male,EMP0083,2023-10-15,,,Active
+EMP0233,Pranav Reddy,Sales,Hyderabad,L3,Male,EMP0067,2021-06-05,2024-08-13,Involuntary - restructuring,Exited
+EMP0234,Pooja Patel,Product,Hyderabad,L3,Male,EMP0375,2022-11-19,,,Active
+EMP0235,Harini Iyer,Sales,Pune,L2,Male,EMP0095,2020-05-26,2024-06-03,Better opportunity,Exited
+EMP0236,Bhavya Bose,Product,Hyderabad,L5,Male,,2025-02-03,,,Active
+EMP0237,Manish Bose,Sales,Hyderabad,L2,Male,EMP0383,2025-05-09,,,Active
+EMP0238,Ananya Rao,Engineering,Hyderabad,L3,Female,EMP0148,2019-08-01,,,Active
+EMP0239,Zoya Sharma,Engineering,Remote,L5,Male,EMP0047,2024-04-21,,,Active
+EMP0240,Vidya Pillai,Engineering,Mumbai,L1,Female,EMP0247,2020-03-02,2023-08-25,Personal reasons,Exited
+EMP0241,Pranav Kulkarni,Engineering,Hyderabad,L3,Female,EMP0239,2026-01-18,,,Active
+EMP0242,Rhea Sharma,Engineering,Mumbai,L2,Male,EMP0247,2020-04-15,,,Active
+EMP0243,Nikhil Menon,Customer Success,Hyderabad,L3,Male,EMP0255,2026-04-24,,,Active
+EMP0244,Farhan Chatterjee,Operations,Hyderabad,L1,Male,EMP0419,2024-10-13,2025-12-22,Better opportunity,Exited
+EMP0245,Gaurav Chatterjee,Operations,Delhi NCR,L5,Male,EMP0268,2023-11-28,,,Active
+EMP0246,Farhan Menon,Operations,Pune,L3,Male,EMP0245,2024-02-25,,,Active
+EMP0247,Harini Nair,Engineering,Pune,L3,Male,EMP0148,2020-01-12,2023-10-02,Higher education,Exited
+EMP0248,Nikhil Desai,Marketing,Delhi NCR,L4,Female,EMP0369,2019-07-16,,,Active
+EMP0249,Vidya Kapoor,Product,Pune,L4,Male,EMP0201,2020-06-08,,,Active
+EMP0250,Ritu Gupta,Engineering,Mumbai,L2,Male,EMP0362,2023-10-13,,,Active
+EMP0251,Varun Rao,Engineering,Remote,L1,Female,EMP0183,2022-04-16,2025-02-27,Relocation,Exited
+EMP0252,Arjun Bose,Engineering,Hyderabad,L2,Female,EMP0163,2025-06-28,,,Active
+EMP0253,Vikram Sharma,Engineering,Remote,L4,Male,EMP0066,2023-01-08,,,Active
+EMP0254,Varun Reddy,Sales,Remote,L4,Male,EMP0067,2022-04-29,2023-09-20,Compensation,Exited
+EMP0255,Kabir Shetty,Customer Success,Mumbai,L5,Male,EMP0340,2024-01-21,,,Active
+EMP0256,Harini Kulkarni,Operations,Delhi NCR,L3,Male,EMP0419,2023-03-12,2024-07-11,Compensation,Exited
+EMP0257,Deepika Bose,Engineering,Hyderabad,L2,Male,EMP0152,2024-03-06,,,Active
+EMP0258,Vikram Chatterjee,Engineering,Hyderabad,L3,Male,EMP0017,2023-12-02,2025-10-17,Relocation,Exited
+EMP0259,Chetan Gupta,Customer Success,Bengaluru,L3,Male,EMP0340,2023-04-21,2023-12-02,Personal reasons,Exited
+EMP0260,Ritu Rao,Product,Delhi NCR,L3,Male,EMP0201,2026-03-31,,,Active
+EMP0261,Uma Reddy,Engineering,Delhi NCR,L3,Female,EMP0172,2026-03-30,,,Active
+EMP0262,Rhea Menon,Product,Bengaluru,L6,Female,,2025-09-27,,,Active
+EMP0263,Jaya Chatterjee,Finance,Hyderabad,L3,Female,EMP0053,2021-12-11,,,Active
+EMP0264,Meera Pillai,Marketing,Bengaluru,L6,Male,,2019-11-30,2021-01-18,Relocation,Exited
+EMP0265,Ritu Desai,Engineering,Pune,L4,Male,EMP0392,2024-03-30,2026-06-26,Performance,Exited
+EMP0266,Meera Nair,Product,Hyderabad,L4,Female,EMP0186,2025-01-31,,,Active
+EMP0267,Neha Banerjee,Customer Success,Remote,L1,Male,EMP0031,2023-09-14,,,Active
+EMP0268,Pooja Gupta,Operations,Remote,L5,Male,EMP0061,2020-03-01,,,Active
+EMP0269,Farhan Pillai,Sales,Mumbai,L2,Female,EMP0030,2022-05-30,2025-08-16,Better opportunity,Exited
+EMP0270,Vidya Kapoor,Sales,Bengaluru,L2,Male,EMP0112,2022-06-22,,,Active
+EMP0271,Gaurav Banerjee,Sales,Mumbai,L4,Male,EMP0016,2025-05-27,,,Active
+EMP0272,Neha Pillai,Sales,Remote,L2,Female,EMP0355,2022-04-24,2025-11-17,Better opportunity,Exited
+EMP0273,Nandini Pillai,Engineering,Delhi NCR,L2,Male,EMP0238,2019-10-15,2023-07-19,Involuntary - restructuring,Exited
+EMP0274,Shreya Reddy,Sales,Pune,L4,Male,EMP0413,2025-07-27,,,Active
+EMP0275,Omkar Mehta,Customer Success,Bengaluru,L5,Female,EMP0390,2024-01-08,2024-11-16,Relocation,Exited
+EMP0276,Yash Banerjee,Customer Success,Delhi NCR,L4,Male,EMP0390,2024-05-25,2024-12-20,Better opportunity,Exited
+EMP0277,Vikram Shetty,Sales,Remote,L5,Male,EMP0146,2025-07-11,,,Active
+EMP0278,Ritu Rao,Finance,Mumbai,L3,Male,EMP0158,2025-12-12,,,Active
+EMP0279,Nandini Pillai,Sales,Delhi NCR,L1,Female,EMP0202,2024-04-24,2026-01-19,Performance,Exited
+EMP0280,Priya Malhotra,Engineering,Delhi NCR,L3,Female,EMP0148,2021-09-01,,,Active
+EMP0281,Kabir Desai,Human Resources,Bengaluru,L1,Female,EMP0319,2020-03-02,2023-08-23,Personal reasons,Exited
+EMP0282,Kavya Pillai,Operations,Bengaluru,L3,Male,EMP0076,2025-08-23,,,Active
+EMP0283,Harini Patel,Customer Success,Hyderabad,L2,Female,EMP0058,2024-11-03,,,Active
+EMP0284,Meera Joshi,Marketing,Mumbai,L1,Male,EMP0369,2019-04-18,2025-07-07,Personal reasons,Exited
+EMP0285,Bhavya Chatterjee,Sales,Hyderabad,L6,Female,EMP0068,2026-05-03,,,Active
+EMP0286,Sanjana Patel,Engineering,Mumbai,L1,Female,EMP0074,2019-07-13,2022-04-03,Better opportunity,Exited
+EMP0287,Dhruv Reddy,Operations,Remote,L2,Female,EMP0061,2020-03-16,2023-12-18,Better opportunity,Exited
+EMP0288,Pooja Iyer,Sales,Hyderabad,L2,Male,EMP0235,2025-03-21,,,Active
+EMP0289,Arjun Bose,Sales,Delhi NCR,L2,Female,EMP0068,2019-11-13,2021-08-19,Relocation,Exited
+EMP0290,Dhruv Kapoor,Sales,Mumbai,L1,Male,EMP0313,2021-12-16,2025-08-28,Personal reasons,Exited
+EMP0291,Tarun Iyer,Sales,Pune,L4,Male,EMP0068,2023-08-14,2025-06-14,Compensation,Exited
+EMP0292,Deepika Menon,Marketing,Hyderabad,L1,Male,EMP0396,2025-09-01,2026-07-30,Compensation,Exited
+EMP0293,Rohit Shetty,Engineering,Hyderabad,L3,Male,EMP0247,2021-07-03,,,Active
+EMP0294,Ananya Joshi,Sales,Hyderabad,L1,Female,EMP0254,2023-04-15,,,Active
+EMP0295,Varun Gupta,Engineering,Delhi NCR,L2,Male,EMP0224,2019-10-26,,,Active
+EMP0296,Neha Sharma,Sales,Bengaluru,L1,Female,EMP0086,2023-05-13,,,Active
+EMP0297,Farhan Kapoor,Engineering,Bengaluru,L4,Female,EMP0017,2021-08-10,2025-07-02,Better opportunity,Exited
+EMP0298,Rahul Gupta,Marketing,Hyderabad,L2,Female,EMP0369,2020-12-07,,,Active
+EMP0299,Tarun Verma,Marketing,Delhi NCR,L2,Male,EMP0040,2024-10-11,,,Active
+EMP0300,Ritu Nair,Sales,Bengaluru,L2,Male,EMP0116,2025-11-19,,,Active
+EMP0301,Ritu Chatterjee,Marketing,Hyderabad,L2,Female,EMP0207,2020-09-07,2021-08-22,Performance,Exited
+EMP0302,Bhavya Patel,Finance,Hyderabad,L4,Female,EMP0388,2021-08-30,2025-04-20,Relocation,Exited
+EMP0303,Lakshmi Nair,Sales,Remote,L2,Female,EMP0068,2022-01-23,2025-09-14,Compensation,Exited
+EMP0304,Aditi Pillai,Engineering,Hyderabad,L1,Male,EMP0242,2022-02-08,2025-06-17,Better opportunity,Exited
+EMP0305,Omkar Reddy,Sales,Bengaluru,L3,Male,EMP0277,2025-09-23,,,Active
+EMP0306,Kavya Reddy,Human Resources,Pune,L1,Male,EMP0319,2019-09-29,,,Active
+EMP0307,Rohit Kulkarni,Customer Success,Hyderabad,L2,Female,EMP0275,2025-09-30,,,Active
+EMP0308,Ritu Chatterjee,Marketing,Bengaluru,L1,Female,EMP0301,2026-02-16,,,Active
+EMP0309,Aditi Rao,Marketing,Bengaluru,L5,Female,EMP0365,2025-07-24,,,Active
+EMP0310,Uma Chatterjee,Customer Success,Remote,L1,Male,EMP0398,2025-03-05,,,Active
+EMP0311,Nandini Desai,Finance,Hyderabad,L3,Male,EMP0381,2019-11-12,,,Active
+EMP0312,Deepika Kapoor,Customer Success,Mumbai,L1,Male,EMP0191,2025-03-22,,,Active
+EMP0313,Tarun Sharma,Sales,Bengaluru,L1,Female,EMP0072,2020-01-17,2024-03-25,Involuntary - restructuring,Exited
+EMP0314,Rahul Malhotra,Customer Success,Hyderabad,L6,Male,EMP0127,2024-04-28,2025-11-07,Performance,Exited
+EMP0315,Ishaan Chatterjee,Engineering,Hyderabad,L2,Male,EMP0015,2020-11-25,,,Active
+EMP0316,Yash Rao,Marketing,Hyderabad,L1,Female,EMP0373,2022-10-25,2024-10-19,Better opportunity,Exited
+EMP0317,Kavya Joshi,Engineering,Hyderabad,L4,Male,EMP0327,2025-11-15,,,Active
+EMP0318,Aarav Patel,Product,Hyderabad,L3,Female,EMP0165,2020-09-03,,,Active
+EMP0319,Dhruv Patel,Human Resources,Hyderabad,L1,Male,,2019-01-10,2020-09-20,Better opportunity,Exited
+EMP0320,Meera Verma,Engineering,Mumbai,L3,Female,EMP0414,2021-05-09,,,Active
+EMP0321,Chetan Chatterjee,Customer Success,Bengaluru,L2,Female,EMP0144,2020-04-28,2022-05-26,Better opportunity,Exited
+EMP0322,Vidya Kulkarni,Sales,Pune,L2,Female,EMP0237,2025-12-01,,,Active
+EMP0323,Ishaan Desai,Human Resources,Hyderabad,L2,Male,EMP0032,2023-11-15,,,Active
+EMP0324,Aditi Chatterjee,Engineering,Pune,L1,Male,EMP0046,2025-09-08,,,Active
+EMP0325,Gaurav Shetty,Operations,Bengaluru,L2,Female,EMP0162,2023-05-25,2024-01-28,Personal reasons,Exited
+EMP0326,Deepika Gupta,Operations,Bengaluru,L1,Female,EMP0342,2020-03-03,2021-08-30,Performance,Exited
+EMP0327,Chetan Nair,Engineering,Hyderabad,L4,Female,EMP0133,2024-04-04,,,Active
+EMP0328,Dhruv Menon,Sales,Pune,L1,Female,EMP0003,2021-03-25,2022-05-25,Better opportunity,Exited
+EMP0329,Zoya Kapoor,Engineering,Hyderabad,L2,Male,EMP0069,2020-08-28,2022-10-08,Personal reasons,Exited
+EMP0330,Nandini Iyer,Operations,Hyderabad,L1,Female,EMP0141,2023-01-12,,,Active
+EMP0331,Tarun Kulkarni,Customer Success,Mumbai,L1,Female,EMP0031,2024-08-31,,,Active
+EMP0332,Vikram Kapoor,Sales,Mumbai,L4,Female,EMP0139,2024-07-22,2026-04-26,Better opportunity,Exited
+EMP0333,Rohit Iyer,Engineering,Mumbai,L2,Female,EMP0239,2024-04-22,,,Active
+EMP0334,Kabir Gupta,Finance,Pune,L4,Male,EMP0302,2025-04-25,,,Active
+EMP0335,Sanjana Shetty,Sales,Bengaluru,L2,Male,EMP0105,2026-03-16,,,Active
+EMP0336,Rahul Joshi,Customer Success,Pune,L1,Male,EMP0144,2020-02-15,2021-01-05,Better opportunity,Exited
+EMP0337,Uma Menon,Finance,Mumbai,L1,Male,EMP0411,2022-09-03,,,Active
+EMP0338,Dhruv Shetty,Engineering,Hyderabad,L2,Female,EMP0392,2021-11-19,,,Active
+EMP0339,Chetan Reddy,Engineering,Pune,L2,Female,EMP0247,2024-09-05,,,Active
+EMP0340,Neha Menon,Customer Success,Pune,L6,Male,,2021-08-09,,,Active
+EMP0341,Meera Menon,Marketing,Hyderabad,L2,Male,EMP0143,2022-12-10,2025-03-14,Higher education,Exited
+EMP0342,Siddharth Shetty,Operations,Bengaluru,L1,Male,EMP0371,2019-04-12,2022-10-26,Performance,Exited
+EMP0343,Priya Reddy,Engineering,Bengaluru,L2,Male,EMP0046,2024-05-15,,,Active
+EMP0344,Manish Bose,Sales,Bengaluru,L3,Female,EMP0086,2022-12-25,,,Active
+EMP0345,Manish Joshi,Customer Success,Hyderabad,L3,Male,EMP0416,2024-01-11,2025-01-22,Compensation,Exited
+EMP0346,Priya Patel,Human Resources,Hyderabad,L5,Male,EMP0114,2021-08-10,2025-03-10,Better opportunity,Exited
+EMP0347,Farhan Iyer,Marketing,Hyderabad,L2,Male,EMP0207,2020-05-04,,,Active
+EMP0348,Jaya Bose,Engineering,Hyderabad,L1,Female,EMP0172,2024-01-17,2024-11-27,Compensation,Exited
+EMP0349,Rohit Pillai,Operations,Hyderabad,L2,Male,EMP0061,2019-04-08,,,Active
+EMP0350,Rhea Sharma,Finance,Bengaluru,L1,Female,EMP0181,2025-05-15,,,Active
+EMP0351,Rhea Menon,Sales,Hyderabad,L1,Male,EMP0226,2022-01-12,2026-02-23,Compensation,Exited
+EMP0352,Nandini Banerjee,Customer Success,Remote,L2,Female,EMP0142,2022-02-01,,,Active
+EMP0353,Lakshmi Banerjee,Operations,Hyderabad,L1,Male,EMP0076,2025-08-15,,,Active
+EMP0354,Kabir Menon,Engineering,Delhi NCR,L2,Female,EMP0362,2024-04-07,2025-08-18,Personal reasons,Exited
+EMP0355,Varun Nair,Sales,Pune,L4,Male,EMP0104,2021-05-15,2025-02-23,Better opportunity,Exited
+EMP0356,Shreya Joshi,Product,Remote,L3,Male,EMP0234,2023-04-24,,,Active
+EMP0357,Omkar Shetty,Sales,Mumbai,L3,Female,EMP0067,2022-03-18,,,Active
+EMP0358,Dhruv Shetty,Engineering,Bengaluru,L2,Male,EMP0410,2024-03-21,,,Active
+EMP0359,Aditi Pillai,Customer Success,Hyderabad,L1,Male,EMP0321,2021-02-03,,,Active
+EMP0360,Yash Shetty,Customer Success,Hyderabad,L2,Male,EMP0361,2023-11-29,2025-03-15,Higher education,Exited
+EMP0361,Nikhil Patel,Customer Success,Remote,L3,Female,EMP0259,2023-05-30,,,Active
+EMP0362,Yash Malhotra,Engineering,Delhi NCR,L3,Male,EMP0006,2022-11-24,,,Active
+EMP0363,Meera Nair,Engineering,Bengaluru,L1,Female,EMP0052,2023-05-09,2026-07-25,Compensation,Exited
+EMP0364,Uma Nair,Engineering,Bengaluru,L4,Male,EMP0407,2024-08-14,2025-11-15,Performance,Exited
+EMP0365,Priya Kulkarni,Marketing,Hyderabad,L6,Male,EMP0264,2020-07-24,,,Active
+EMP0366,Chetan Gupta,Engineering,Bengaluru,L2,Male,EMP0015,2020-09-02,2021-07-08,Performance,Exited
+EMP0367,Nikhil Shetty,Human Resources,Bengaluru,L1,Female,EMP0099,2023-03-19,2025-06-06,Involuntary - restructuring,Exited
+EMP0368,Shreya Reddy,Engineering,Remote,L1,Male,EMP0047,2026-06-16,,,Active
+EMP0369,Yash Sharma,Marketing,Hyderabad,L4,Male,,2019-02-03,2022-02-24,Relocation,Exited
+EMP0370,Pranav Menon,Sales,Delhi NCR,L1,Male,EMP0034,2022-11-10,2025-08-12,Performance,Exited
+EMP0371,Nandini Banerjee,Operations,Mumbai,L1,Male,,2019-01-08,,,Active
+EMP0372,Tarun Verma,Engineering,Remote,L1,Male,EMP0251,2024-05-04,,,Active
+EMP0373,Tanvi Mehta,Marketing,Bengaluru,L4,Male,EMP0369,2020-01-29,2023-03-19,Compensation,Exited
+EMP0374,Siddharth Iyer,Engineering,Hyderabad,L2,Male,EMP0293,2025-07-15,,,Active
+EMP0375,Dhruv Menon,Product,Delhi NCR,L3,Male,EMP0165,2021-03-14,2022-02-11,Better opportunity,Exited
+EMP0376,Gaurav Mehta,Engineering,Remote,L1,Male,EMP0377,2023-05-17,2024-11-11,Compensation,Exited
+EMP0377,Chetan Iyer,Engineering,Hyderabad,L2,Female,EMP0069,2021-12-17,,,Active
+EMP0378,Zoya Joshi,Customer Success,Remote,L1,Female,EMP0384,2019-07-30,2021-03-29,Performance,Exited
+EMP0379,Ishaan Gupta,Human Resources,Remote,L1,Female,EMP0323,2024-02-25,,,Active
+EMP0380,Vikram Reddy,Finance,Hyderabad,L2,Female,EMP0388,2021-06-14,2024-07-04,Higher education,Exited
+EMP0381,Tarun Shetty,Finance,Remote,L3,Male,,2019-02-14,,,Active
+EMP0382,Arjun Nair,Engineering,Pune,L3,Female,EMP0047,2023-03-17,2023-12-25,Involuntary - restructuring,Exited
+EMP0383,Arjun Reddy,Sales,Mumbai,L6,Male,EMP0079,2024-12-07,,,Active
+EMP0384,Gaurav Desai,Customer Success,Bengaluru,L2,Female,,2019-01-11,2022-04-06,Performance,Exited
+EMP0385,Aditi Mehta,Engineering,Bengaluru,L2,Female,EMP0297,2021-08-25,2022-08-08,Better opportunity,Exited
+EMP0386,Yash Desai,Customer Success,Remote,L2,Male,EMP0142,2021-05-18,,,Active
+EMP0387,Uma Menon,Operations,Hyderabad,L6,Male,,2023-12-06,,,Active
+EMP0388,Rohit Gupta,Finance,Remote,L5,Male,,2020-04-09,,,Active
+EMP0389,Nikhil Bose,Sales,Delhi NCR,L4,Male,EMP0139,2025-04-04,,,Active
+EMP0390,Ishaan Nair,Customer Success,Hyderabad,L6,Female,EMP0340,2023-11-15,,,Active
+EMP0391,Dhruv Desai,Engineering,Bengaluru,L2,Male,EMP0414,2022-03-27,2025-07-03,Performance,Exited
+EMP0392,Varun Kapoor,Engineering,Hyderabad,L4,Female,EMP0117,2020-06-03,,,Active
+EMP0393,Dhruv Mehta,Engineering,Remote,L1,Female,EMP0238,2019-10-02,2021-01-31,Relocation,Exited
+EMP0394,Nandini Nair,Sales,Pune,L1,Male,EMP0332,2024-09-12,,,Active
+EMP0395,Kavya Desai,Marketing,Hyderabad,L1,Male,EMP0369,2022-06-09,,,Active
+EMP0396,Tarun Kulkarni,Marketing,Delhi NCR,L3,Male,EMP0373,2022-12-28,,,Active
+EMP0397,Sanjana Joshi,Finance,Hyderabad,L3,Female,EMP0381,2019-12-15,,,Active
+EMP0398,Pranav Kulkarni,Customer Success,Hyderabad,L2,Female,EMP0415,2023-05-30,2026-06-01,Performance,Exited
+EMP0399,Priya Pillai,Sales,Bengaluru,L3,Female,EMP0016,2022-05-26,2025-01-28,Personal reasons,Exited
+EMP0400,Aarav Sharma,Sales,Hyderabad,L4,Female,EMP0095,2021-09-17,,,Active
+EMP0401,Manish Iyer,Engineering,Delhi NCR,L3,Female,EMP0069,2021-06-20,,,Active
+EMP0402,Ananya Mehta,Engineering,Hyderabad,L1,Female,EMP0110,2020-08-07,,,Active
+EMP0403,Ananya Patel,Marketing,Mumbai,L4,Female,EMP0143,2024-05-25,,,Active
+EMP0404,Ritu Verma,Engineering,Hyderabad,L1,Male,EMP0117,2022-02-20,,,Active
+EMP0405,Pooja Pillai,Engineering,Pune,L3,Male,EMP0401,2022-03-07,,,Active
+EMP0406,Omkar Iyer,Human Resources,Pune,L2,Male,EMP0212,2024-03-05,2024-09-21,Better opportunity,Exited
+EMP0407,Vidya Joshi,Engineering,Mumbai,L4,Male,EMP0172,2022-07-29,,,Active
+EMP0408,Sanjana Menon,Sales,Bengaluru,L4,Male,EMP0086,2024-11-01,,,Active
+EMP0409,Priya Desai,Sales,Pune,L3,Female,EMP0095,2023-08-31,2025-02-10,Better opportunity,Exited
+EMP0410,Rahul Banerjee,Engineering,Mumbai,L3,Female,EMP0247,2021-11-20,2022-06-10,Compensation,Exited
+EMP0411,Meera Nair,Finance,Remote,L2,Male,EMP0053,2022-07-20,,,Active
+EMP0412,Ananya Reddy,Engineering,Hyderabad,L2,Female,EMP0134,2024-12-10,,,Active
+EMP0413,Neha Kapoor,Sales,Mumbai,L5,Female,EMP0079,2022-06-04,2024-02-22,Involuntary - restructuring,Exited
+EMP0414,Deepika Gupta,Engineering,Bengaluru,L5,Male,EMP0015,2020-04-25,2021-11-26,Relocation,Exited
+EMP0415,Rohit Kulkarni,Customer Success,Bengaluru,L4,Male,EMP0127,2023-05-10,,,Active
+EMP0416,Lakshmi Joshi,Customer Success,Bengaluru,L4,Female,EMP0214,2023-04-03,,,Active
+EMP0417,Pranav Gupta,Engineering,Remote,L6,Female,EMP0066,2022-09-21,,,Active
+EMP0418,Ishaan Pillai,Sales,Pune,L1,Female,EMP0014,2025-01-03,,,Active
+EMP0419,Tarun Joshi,Operations,Pune,L4,Male,EMP0268,2020-11-20,,,Active
+EMP0420,Rahul Kapoor,Human Resources,Hyderabad,L3,Male,,2019-10-05,2023-05-24,Higher education,Exited
