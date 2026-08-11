@@ -38,31 +38,28 @@ worst failure an analytics tool has. Many-to-many candidates are dropped when a 
 dimension exists, since fan-out joins corrupt every aggregate.
 
 **Guardrails from observed failures.** The first smoke test emitted MySQL `DATEDIFF()`,
-invalid in DuckDB. Hence dialect grounding, execute-and-retry feeding the engine's own
-error back once, output sanitising, and SELECT-only validation — the correctness guard
-*and* the security guard, since generated SQL is about to execute.
+invalid in DuckDB. Hence dialect grounding, execute-and-retry feeding the engine's own error
+back once, output sanitising, and SELECT-only validation — the correctness guard *and* the
+security guard, since generated SQL is about to execute.
 
 **Correctness is measured**, not asserted: 17 questions with hand-written gold queries,
 scored on execution accuracy. **100% on `gpt-oss-120b` (Groq free tier), 82% on a local 3B
-model** — same architecture and prompt, and the gap sits almost entirely in cross-file
-joins, the category I expected to be hardest.
+model** — same architecture and prompt, with the gap almost entirely in cross-file joins.
 
-The harness earned its keep three times. It caught **my own regression** — adding detailed
+The harness earned its keep three times. It caught **my own regression**: adding detailed
 prompt guidance dropped accuracy from 71% to 65% and made the model hallucinate table
-names; cutting it to two lines got 82%. Small models degrade when you add instructions, and
-I'd have shipped that as an improvement.
+names; cutting it to two lines got 82%. Small models degrade when you add instructions — I'd
+have shipped that as an improvement.
 
-It also caught **two bugs in itself**. One question's gold query was simply wrong, and the
-model's disagreeing answer was the correct one. I'd asked for "offer-to-join conversion
-rate" — a phrase with no single meaning — so no ground truth could be right. **That is the
-clearest argument here for a governed metric layer:** an undefined metric makes a correct
-system disagree with its own test, and in production it makes two teams disagree in a board
-meeting.
+It also caught **two bugs in itself**. One gold query was simply wrong, and the model's
+disagreeing answer was correct: I'd asked for "offer-to-join conversion rate," a phrase with
+no single meaning, so no ground truth could be right. **That's the clearest argument here for
+a governed metric layer** — an undefined metric makes a correct system disagree with its own
+test, and in production makes two teams disagree in a board meeting.
 
-**Stated plainly: 17 questions is a smoke test, not a benchmark.** 100% means no
-regressions on cases I thought to write, and it arrived only after I fixed the harness.
-The narrow claim is what I'd defend — the architecture holds, the failure modes are
-understood, and regressions are now catchable.
+**Plainly: 17 questions is a smoke test, not a benchmark.** 100% means no regressions on
+cases I thought to write, and it arrived after I fixed the harness. The narrow claim is what
+I'd defend.
 
 ## Cut deliberately
 
