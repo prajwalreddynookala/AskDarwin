@@ -164,7 +164,26 @@ def _groq_key() -> Optional[str]:
                 return nested
     except Exception:
         pass
-    return None
+    return _key_from_repo_secrets()
+
+
+def _key_from_repo_secrets() -> Optional[str]:
+    """Last resort: read the repo's own secrets.toml.
+
+    Streamlit resolves secrets relative to the working directory, so launching from a
+    parent directory finds nothing and the app silently falls back to a local model
+    with a perfectly valid key sitting on disk. Look next to the code as well.
+    """
+    path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        ".streamlit", "secrets.toml")
+    try:
+        with open(path) as handle:
+            match = re.search(r'^\s*GROQ_API_KEY\s*=\s*["\']([^"\']+)["\']',
+                              handle.read(), re.M)
+        return match.group(1) if match else None
+    except OSError:
+        return None
 
 
 def _groq_model(key: str) -> str:
@@ -208,22 +227,81 @@ def active_provider() -> Tuple[str, str]:
         "No model available. Set GROQ_API_KEY (free tier) or run Ollama locally.")
 
 
-def _complete(prompt: str) -> str:
+def _complete(prompt: str, system: Optional[str] = None, max_tokens: int = 700) -> str:
+    system = system or SYSTEM_PROMPT
     provider, model = active_provider()
     if provider == "groq":
         out = _post_json(
             GROQ_URL + "/chat/completions",
             {"model": model,
-             "messages": [{"role": "system", "content": SYSTEM_PROMPT},
+             "messages": [{"role": "system", "content": system},
                           {"role": "user", "content": prompt}],
-             "temperature": 0, "max_tokens": 700},
+             "temperature": 0, "max_tokens": max_tokens},
             {"Authorization": "Bearer " + _groq_key()})
         return out["choices"][0]["message"]["content"]
     out = _post_json(
         OLLAMA_URL + "/api/generate",
-        {"model": model, "system": SYSTEM_PROMPT, "prompt": prompt,
-         "stream": False, "options": {"temperature": 0, "num_predict": 700}})
+        {"model": model, "system": system, "prompt": prompt,
+         "stream": False, "options": {"temperature": 0, "num_predict": max_tokens}})
     return out.get("response", "")
+
+
+# ------------------------------------------------- dataset orientation
+
+ORIENT_SYSTEM = """You help someone understand a dataset they have just uploaded.
+
+You are given only the schema — table names, column names, types, and sometimes a few
+sample values from categorical columns. You never see the rows.
+
+Return ONLY a JSON object, no markdown fences, with exactly these keys:
+{
+  "summary": "2-3 plain sentences: what this data appears to describe, and what the
+              tables represent. Address the reader as 'you'. No preamble, no hedging
+              about being an AI. If the domain is unclear, say so plainly.",
+  "tables": [{"name": "<exact table name>", "describes": "<one short clause>"}],
+  "questions": ["<6 questions this specific data can actually answer>"]
+}
+
+Rules for the questions:
+- Use the real column and value names from this schema. Never invent a column.
+- Make at least two of them span more than one table, if more than one table exists.
+- Include a mix: a total or average, a breakdown by category, a ranking, a trend over
+  time if any date column exists, and a comparison between two groups.
+- Write them the way a person would type them, not as SQL descriptions.
+- Keep each under 90 characters."""
+
+
+def describe_dataset(schema_text: str, joins_text: str) -> Optional[Dict]:
+    """One call that orients the user: what this data is, and what to ask of it.
+
+    Sends schema only, exactly like query generation. Returns None on any failure —
+    the UI falls back to a deterministic description rather than blocking upload.
+    """
+    prompt = "Schema:\n%s\n\n%s\n\nJSON:" % (schema_text, joins_text)
+    try:
+        raw = _complete(prompt, system=ORIENT_SYSTEM, max_tokens=900)
+    except LLMError:
+        return None
+
+    text = (raw or "").strip()
+    fence = re.search(r"```(?:json)?\s*(.+?)```", text, re.S | re.I)
+    if fence:
+        text = fence.group(1)
+    start, end = text.find("{"), text.rfind("}")
+    if start == -1 or end <= start:
+        return None
+    try:
+        data = json.loads(text[start:end + 1])
+    except ValueError:
+        return None
+
+    questions = [str(q).strip() for q in data.get("questions", []) if str(q).strip()]
+    tables = [t for t in data.get("tables", [])
+              if isinstance(t, dict) and t.get("name") and t.get("describes")]
+    summary = str(data.get("summary", "")).strip()
+    if not summary and not questions:
+        return None
+    return {"summary": summary, "tables": tables, "questions": questions[:6]}
 
 
 # ------------------------------------------------------ sanitise + validate

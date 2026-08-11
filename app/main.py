@@ -1,8 +1,8 @@
 """AskDarwin — Streamlit UI.
 
-Upload -> review what was understood -> ask -> get an answer you can check.
+Upload -> understand what you uploaded -> ask -> get an answer you can check.
 
-The "review what was understood" step exists because the product's real risk is not
+The "understand what you uploaded" step exists because the product's real risk is not
 failing to answer; it is answering confidently from a relationship it guessed wrong.
 """
 
@@ -10,6 +10,7 @@ import os
 import sys
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -19,28 +20,73 @@ DEMO_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 DEMO_FILES = ["employees.csv", "recruitment.csv", "performance.csv",
               "attendance.csv", "compensation.csv"]
 
-SUGGESTED = [
-    "How many employees are currently active, by department?",
-    "What is the average tenure in years for employees who exited, by exit reason?",
-    "Compare the average performance rating of employees hired through Employee Referral versus Recruitment Agency",
-    "Show the monthly trend of total days absent across the company",
-    "What is the total monthly payroll cost by department for the latest effective month?",
-    "Which 5 departments have the highest attrition rate?",
-    "What is the offer-to-join conversion rate by recruitment source?",
-    "Compare average base salary of employees rated 5 versus rated 2",
-]
-
 st.set_page_config(page_title="AskDarwin", page_icon="📊", layout="wide")
+
+# The keyed container itself cannot be the sticky element: Streamlit wraps it in a flex
+# layout wrapper that is exactly as tall as its child, leaving sticky no travel. Pinning
+# the wrapper instead gives it the full height of the page to stick within.
+STICKY_CSS = """
+<style>
+div[data-testid="stLayoutWrapper"]:has(> .st-key-askbox) {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: var(--background-color, #ffffff);
+}
+.st-key-askbox {
+    background: var(--background-color, #ffffff);
+    padding-top: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.18);
+}
+</style>
+"""
 
 
 def _init_state():
     for key, default in [("tables", {}), ("schemas", []), ("joins", []),
-                         ("history", []), ("warnings", []), ("loaded_from", None)]:
+                         ("history", []), ("warnings", []), ("overview", None),
+                         ("scroll", False)]:
         if key not in st.session_state:
             st.session_state[key] = default
 
 
-def _ingest(files, source_label):
+# ------------------------------------------------------------- suggestions
+
+def _fallback_questions(schemas):
+    """Deterministic suggestions from the schema, used when the model call fails.
+
+    Never hard-coded to a domain — they are built from whatever columns arrived.
+    """
+    out = []
+    for s in schemas:
+        cats = [c["name"] for c in s["columns"]
+                if c["type"] == "VARCHAR" and 1 < c["distinct"] <= 20]
+        nums = [c["name"] for c in s["columns"]
+                if c["type"] in ("INTEGER", "DOUBLE") and not c["redacted"]]
+        dates = [c["name"] for c in s["columns"] if c["type"] == "DATE"]
+        if cats:
+            out.append("How many rows are there in %s for each %s?" % (s["name"], cats[0]))
+        if cats and nums:
+            out.append("What is the average %s by %s?" % (nums[0], cats[0]))
+            out.append("Which %s has the highest total %s?" % (cats[0], nums[0]))
+        if dates and nums:
+            out.append("Show the trend of total %s over time" % nums[0])
+    if not out:
+        out = ["How many rows are in each table?"]
+    return out[:6]
+
+
+def _suggestions(schemas):
+    ov = st.session_state.overview
+    if ov and ov.get("questions"):
+        return ov["questions"]
+    return _fallback_questions(schemas)
+
+
+# ----------------------------------------------------------------- ingest
+
+def _ingest(files):
     tables, warnings = ingest.load_files(files)
     if not tables:
         st.session_state.warnings = warnings or ["No readable tables found."]
@@ -50,8 +96,16 @@ def _ingest(files, source_label):
     st.session_state.schemas = schemas
     st.session_state.joins = joins.infer_joins(tables, schemas)
     st.session_state.warnings = warnings
-    st.session_state.loaded_from = source_label
     st.session_state.history = []
+    st.session_state.overview = None
+
+    with st.spinner("Reading the schema and working out what this data is…"):
+        try:
+            st.session_state.overview = llm.describe_dataset(
+                ingest.schema_to_prompt(schemas),
+                joins.joins_to_prompt(st.session_state.joins))
+        except Exception:
+            st.session_state.overview = None
 
 
 def _provider_badge():
@@ -65,7 +119,7 @@ def _provider_badge():
 
 def sidebar():
     st.sidebar.markdown("### AskDarwin")
-    st.sidebar.caption("Ask your HR spreadsheets anything.")
+    st.sidebar.caption("Ask your spreadsheets anything.")
     _provider_badge()
     st.sidebar.markdown("---")
 
@@ -73,46 +127,55 @@ def sidebar():
         "Upload CSV or Excel files", type=["csv", "xlsx", "xls", "xlsm", "tsv"],
         accept_multiple_files=True)
     if uploaded and st.sidebar.button("Load uploaded files", width="stretch"):
-        _ingest(uploaded, "upload")
+        _ingest(uploaded)
 
     if st.sidebar.button("Load demo HR dataset", width="stretch"):
         paths = [os.path.join(DEMO_DIR, f) for f in DEMO_FILES
                  if os.path.exists(os.path.join(DEMO_DIR, f))]
-        _ingest(paths, "demo")
+        _ingest(paths)
 
     st.sidebar.markdown("---")
     st.sidebar.caption(
-        "Your data stays on the machine running this app. Only the **schema** — "
-        "table and column names, types, and sample values from low-cardinality "
-        "categorical columns — is sent to the model. Never the rows.")
+        "Your rows never go to the model. Only the **schema** — table and column names, "
+        "types, and sample values from low-cardinality categorical columns — is sent. "
+        "The data itself is only ever read by DuckDB.")
 
 
-def render_schema():
+# ----------------------------------------------------------------- panels
+
+def render_overview():
     schemas = st.session_state.schemas
-    if not schemas:
-        return
+    overview = st.session_state.overview
     total_rows = sum(s["rows"] for s in schemas)
+
     c1, c2, c3 = st.columns(3)
     c1.metric("Tables", len(schemas))
     c2.metric("Total rows", "{:,}".format(total_rows))
     c3.metric("Relationships found", len(st.session_state.joins))
 
+    if overview and overview.get("summary"):
+        st.info("**What this data looks like** — " + overview["summary"])
+
     with st.expander("What AskDarwin understood from your files", expanded=False):
+        described = {t["name"]: t["describes"] for t in (overview or {}).get("tables", [])}
         for s in schemas:
-            st.markdown("**%s** — %s rows" % (s["name"], "{:,}".format(s["rows"])))
-            rows = []
-            for c in s["columns"]:
-                detail = ", ".join(c["samples"][:4]) if c["samples"] else (
-                    "— withheld —" if c["redacted"] else "")
-                rows.append({"column": c["name"], "type": c["type"],
-                             "null %": c["null_pct"], "distinct": c["distinct"],
-                             "sample values sent to model": detail})
-            st.dataframe(rows, width="stretch", hide_index=True)
+            heading = "**%s** — %s rows" % (s["name"], "{:,}".format(s["rows"]))
+            if described.get(s["name"]):
+                heading += "  ·  _%s_" % described[s["name"]]
+            st.markdown(heading)
+            st.dataframe(
+                [{"column": c["name"], "type": c["type"], "null %": c["null_pct"],
+                  "distinct": c["distinct"],
+                  "sample values sent to model": (
+                      ", ".join(c["samples"][:4]) if c["samples"]
+                      else ("— withheld —" if c["redacted"] else ""))}
+                 for c in s["columns"]],
+                width="stretch", hide_index=True)
 
         st.markdown("#### Detected relationships")
         if st.session_state.joins:
             st.caption("Inferred from column names and how much the values actually "
-                       "overlap. Check these — a wrong join produces a confident wrong answer.")
+                       "overlap. Check these — a wrong join gives a confident wrong answer.")
             st.dataframe(
                 [{"left": "%s.%s" % (j["left_table"], j["left_column"]),
                   "right": "%s.%s" % (j["right_table"], j["right_column"]),
@@ -136,34 +199,25 @@ def render_schema():
 
 
 def render_payload_panel():
-    """Show the literal payload sent to the model.
-
-    The privacy claim is the product's main argument for existing, so it should be
-    something the user can inspect rather than something they have to believe.
-    """
+    """The literal payload sent to the model — the privacy claim, made inspectable."""
     schemas = st.session_state.schemas
     schema_text = ingest.schema_to_prompt(schemas)
     joins_text = joins.joins_to_prompt(st.session_state.joins)
-
     redacted = [(t["name"], c["name"]) for t in schemas for c in t["columns"]
                 if c["redacted"] or (c["type"] == "VARCHAR" and not c["samples"])]
-    total_rows = sum(t["rows"] for t in schemas)
 
     with st.expander("Exactly what gets sent to the model", expanded=False):
         c1, c2, c3 = st.columns(3)
         c1.metric("Rows of your data sent", "0")
-        c2.metric("Rows kept on this machine", "{:,}".format(total_rows))
+        c2.metric("Rows kept out of the model", "{:,}".format(
+            sum(t["rows"] for t in schemas)))
         c3.metric("Columns with values withheld", len(redacted))
-
-        st.caption("This is the complete payload — nothing else leaves the machine. "
-                   "The model reads structure and writes SQL; your rows are only ever "
-                   "touched by DuckDB, locally.")
+        st.caption("This is the complete payload. The model reads structure and writes "
+                   "SQL; your rows are only ever touched by DuckDB.")
         st.code(schema_text + "\n\n" + joins_text, language="text")
-
         if redacted:
-            st.caption("Values withheld from: " +
-                       ", ".join("%s.%s" % r for r in redacted[:12]) +
-                       ("…" if len(redacted) > 12 else ""))
+            st.caption("Values withheld from: " + ", ".join("%s.%s" % r for r in redacted[:12])
+                       + ("…" if len(redacted) > 12 else ""))
 
 
 def render_answer(entry):
@@ -199,7 +253,7 @@ def render_answer(entry):
             st.plotly_chart(fig)
         st.dataframe(df, width="stretch", hide_index=True)
 
-    bits =["%d rows returned" % len(df),
+    bits = ["%d rows returned" % len(df),
             "%s rows scanned" % "{:,}".format(result["rows_scanned"]),
             "%.1fs" % result["elapsed"]]
     if result.get("retried"):
@@ -216,52 +270,106 @@ def render_answer(entry):
             st.caption("Error: " + result["attempts"][0]["error"])
 
 
+# ------------------------------------------------------------------- main
+
+def _ask(question):
+    schema_text = ingest.schema_to_prompt(st.session_state.schemas)
+    joins_text = joins.joins_to_prompt(st.session_state.joins)
+    with st.spinner("Writing SQL and running it over your data…"):
+        result = query.answer_question(
+            question.strip(), st.session_state.tables, schema_text, joins_text)
+    st.session_state.history.insert(0, {"question": question.strip(), "result": result})
+    st.session_state.scroll = True
+
+
 def main():
     _init_state()
+    st.markdown(STICKY_CSS, unsafe_allow_html=True)
     sidebar()
 
     st.title("AskDarwin")
-    st.caption("Ask your HR spreadsheets anything. Every answer comes with the "
-               "query that produced it.")
+    st.caption("Ask your spreadsheets anything. Every answer comes with the query "
+               "that produced it.")
 
     if not st.session_state.tables:
-        st.info("Upload CSV or Excel files in the sidebar, or load the demo HR "
-                "dataset to try it out.")
+        st.info("Upload CSV or Excel files in the sidebar — any domain, not just HR — "
+                "or load the demo HR dataset to try it out.")
         st.markdown(
-            "**How it works** — your files are read locally and profiled. Only the "
-            "*schema* is sent to an open-weights model, which writes a SQL query. "
-            "DuckDB executes that query over your data, so every number is computed, "
-            "not generated.")
+            "**How it works** — your files are read and profiled. Only the *schema* is "
+            "sent to an open-weights model, which writes a SQL query. DuckDB executes "
+            "that query over your data, so every number is computed, not generated.")
         return
 
-    render_schema()
+    render_overview()
     st.markdown("---")
 
-    with st.form("ask", clear_on_submit=False):
-        question = st.text_input(
-            "Ask a question", placeholder="e.g. Which department has the highest attrition rate?")
-        submitted = st.form_submit_button("Ask", type="primary")
+    asked = None
+    with st.container(key="askbox"):
+        with st.form("ask", clear_on_submit=False):
+            question = st.text_input(
+                "Ask a question",
+                placeholder="e.g. Which category has the highest total value?")
+            if st.form_submit_button("Ask", type="primary") and question.strip():
+                asked = question
 
-    st.caption("Try one of these:")
-    cols = st.columns(2)
-    for i, suggestion in enumerate(SUGGESTED):
-        if cols[i % 2].button(suggestion, key="sugg_%d" % i, width="stretch"):
-            question, submitted = suggestion, True
+    suggestions = _suggestions(st.session_state.schemas)
+    has_history = bool(st.session_state.history)
 
-    if submitted and question and question.strip():
-        schema_text = ingest.schema_to_prompt(st.session_state.schemas)
-        joins_text = joins.joins_to_prompt(st.session_state.joins)
-        with st.spinner("Writing SQL and running it over your data…"):
-            result = query.answer_question(
-                question.strip(), st.session_state.tables, schema_text, joins_text)
-        st.session_state.history.insert(0, {"question": question.strip(), "result": result})
+    if suggestions:
+        if has_history:
+            with st.expander("Suggested questions for this data", expanded=False):
+                for i, s in enumerate(suggestions):
+                    if st.button(s, key="sugg_%d" % i, width="stretch"):
+                        asked = s
+        else:
+            st.caption("Questions this data can answer:")
+            cols = st.columns(2)
+            for i, s in enumerate(suggestions):
+                if cols[i % 2].button(s, key="sugg_%d" % i, width="stretch"):
+                    asked = s
 
-    for i, entry in enumerate(st.session_state.history):
-        st.markdown("---")
-        render_answer(entry)
-        if i == 0 and len(st.session_state.history) > 1:
-            st.caption("Earlier questions below. Each question is answered independently — "
-                       "follow-ups like “and for Sales?” are not supported in this version.")
+    if asked:
+        _ask(asked)
+        st.rerun()
+
+    if st.session_state.history:
+        st.markdown('<div id="latest-answer"></div>', unsafe_allow_html=True)
+        for i, entry in enumerate(st.session_state.history):
+            st.markdown("---")
+            render_answer(entry)
+            if i == 0 and len(st.session_state.history) > 1:
+                st.caption("Earlier questions below. Each is answered independently — "
+                           "follow-ups like “and for Sales?” are not supported here.")
+
+    if st.session_state.scroll:
+        st.session_state.scroll = False
+        # Streamlit scrolls an inner <section data-testid="stMain">, not the window, so
+        # scrollIntoView on the document does nothing. Offset the sticky ask box.
+        # Retried, because Streamlit finishes laying out after the component script
+        # fires and a single early attempt gets overwritten.
+        components.html(
+            """<script>
+            (function () {
+                var tries = 0;
+                function jump() {
+                    tries += 1;
+                    var d = window.parent.document;
+                    var target = d.getElementById('latest-answer');
+                    var main = d.querySelector('section[data-testid="stMain"]');
+                    if (target && main) {
+                        var t = target.getBoundingClientRect();
+                        var m = main.getBoundingClientRect();
+                        main.scrollTo({top: main.scrollTop + (t.top - m.top) - 90,
+                                       behavior: tries === 1 ? 'smooth' : 'auto'});
+                    } else if (target) {
+                        target.scrollIntoView({block: 'start'});
+                    }
+                    if (tries < 4) { setTimeout(jump, 400); }
+                }
+                setTimeout(jump, 250);
+            })();
+            </script>""",
+            height=0)
 
 
 if __name__ == "__main__":
