@@ -129,8 +129,41 @@ def render_schema():
             for f in flags[:8]:
                 st.warning(f)
 
+    render_payload_panel()
+
     for w in st.session_state.warnings:
         st.warning(w)
+
+
+def render_payload_panel():
+    """Show the literal payload sent to the model.
+
+    The privacy claim is the product's main argument for existing, so it should be
+    something the user can inspect rather than something they have to believe.
+    """
+    schemas = st.session_state.schemas
+    schema_text = ingest.schema_to_prompt(schemas)
+    joins_text = joins.joins_to_prompt(st.session_state.joins)
+
+    redacted = [(t["name"], c["name"]) for t in schemas for c in t["columns"]
+                if c["redacted"] or (c["type"] == "VARCHAR" and not c["samples"])]
+    total_rows = sum(t["rows"] for t in schemas)
+
+    with st.expander("Exactly what gets sent to the model", expanded=False):
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Rows of your data sent", "0")
+        c2.metric("Rows kept on this machine", "{:,}".format(total_rows))
+        c3.metric("Columns with values withheld", len(redacted))
+
+        st.caption("This is the complete payload — nothing else leaves the machine. "
+                   "The model reads structure and writes SQL; your rows are only ever "
+                   "touched by DuckDB, locally.")
+        st.code(schema_text + "\n\n" + joins_text, language="text")
+
+        if redacted:
+            st.caption("Values withheld from: " +
+                       ", ".join("%s.%s" % r for r in redacted[:12]) +
+                       ("…" if len(redacted) > 12 else ""))
 
 
 def render_answer(entry):
