@@ -28,7 +28,12 @@ GROQ_MODEL_PREFERENCE = [
     "openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.6-27b",
     "llama-3.3-70b-versatile", "llama-3.1-8b-instant",
 ]
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:3b")
+# Apache 2.0. Note that qwen2.5-coder:3b is *not* — it ships under the Qwen Research
+# License, which is non-commercial, so it fails the brief's "open-source models" test
+# despite downloading freely from the same registry. The 0.5b/1.5b/7b/14b/32b sizes are
+# Apache 2.0. Measured on the eval set: 7b 71%, 1.5b 47%. Set OLLAMA_MODEL to
+# qwen2.5-coder:1.5b on a memory-constrained machine, or 14b/32b on a larger one.
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:7b")
 
 CANNOT_ANSWER = "CANNOT_ANSWER"
 

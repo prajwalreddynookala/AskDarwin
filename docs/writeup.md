@@ -43,7 +43,7 @@ generated SQL is about to execute.
 ## Evaluation
 
 17 questions with hand-written gold queries, scored on execution accuracy: **100% on
-`gpt-oss-120b` (Groq free tier), 82% on a local 3B model** — same architecture and prompt,
+`gpt-oss-120b` (Groq free tier), 71% on a local 7B model** — same architecture and prompt,
 with the gap almost entirely in cross-file joins.
 
 The harness earned its keep three times. It caught **my own regression**: adding detailed
@@ -82,7 +82,11 @@ the causal claims it implies, and the fairness exposure is real.
 
 ## Assumptions
 
-Open-weights models only — Groq's free tier (no card) hosted, local Ollama offline. No paid
-APIs or metered credits. AI coding tools were used to build it, as the brief encourages.
-Files up to ~100k rows are held in memory; beyond that the execution layer needs a warehouse,
-though the NL-to-SQL layer is unchanged.
+Open-weights models only, all Apache 2.0: `gpt-oss-120b` on Groq's free tier (no card — and
+it's OpenAI's open-weights release, not their paid API), `qwen2.5-coder:7b` locally. Every
+library is MIT/BSD/Apache. No paid APIs, no metered credits. **A licence audit caught my own
+violation** — I had been benchmarking on `qwen2.5-coder:3b`, which is under a non-commercial
+research licence; I swapped it and re-measured rather than keeping the better score. AI
+coding tools were used to build it, as the brief encourages. Files up to ~100k rows are held
+in memory; beyond that the execution layer needs a warehouse, though the NL-to-SQL layer is
+unchanged.

@@ -304,6 +304,26 @@ per-customer `MIN` subquery, a join and a date difference, and matched at 103.2 
 
 This is stronger evidence than the eval score, precisely because none of it was built for.
 
+**Finding 5: a licence audit caught a constraint violation in my own build.**
+
+The brief requires *open-source* models. Checking rather than assuming, the local fallback
+I had been benchmarking on — `qwen2.5-coder:3b` — ships under the **Qwen Research License**,
+which is non-commercial and therefore not open source, despite downloading freely from the
+same registry as its siblings. It is the only size in that family that isn't Apache 2.0.
+
+Replaced with `qwen2.5-coder:7b` (Apache 2.0) and re-measured rather than keeping the
+better number:
+
+| Local model | Licence | Score |
+|---|---|---|
+| `qwen2.5-coder:3b` | ❌ Qwen Research (non-commercial) | 82% |
+| `qwen2.5-coder:7b` | ✅ Apache 2.0 | **71%** |
+| `qwen2.5-coder:1.5b` | ✅ Apache 2.0 | 47% |
+
+Also worth stating plainly: `openai/gpt-oss-120b` is OpenAI's **open-weights** release
+under Apache 2.0 running on Groq's hardware, not the paid OpenAI API. It reads like the
+latter at a glance.
+
 **The caveat I would state before anyone else does.** Seventeen questions is a smoke test,
 not a benchmark. A 100% pass rate here means *no regressions on the cases I thought to
 write* — it does not mean the system is generally accurate, and the number arrived only

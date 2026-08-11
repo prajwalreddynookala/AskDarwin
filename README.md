@@ -60,9 +60,12 @@ export GROQ_API_KEY=your_free_key_from_console.groq.com
 **Option B — fully local with Ollama (no account, works offline):**
 
 ```bash
-ollama pull qwen2.5-coder:3b
+ollama pull qwen2.5-coder:7b
 ASKDARWIN_PROVIDER=ollama ./.venv/bin/streamlit run app/main.py
 ```
+
+On a memory-constrained machine use `qwen2.5-coder:1.5b` and set
+`OLLAMA_MODEL=qwen2.5-coder:1.5b` — faster, less accurate. Both are Apache 2.0.
 
 Open http://localhost:8501, click **Load demo HR dataset** in the sidebar, and ask
 something. Or upload your own files.
@@ -106,14 +109,15 @@ column names and row order — standard execution accuracy.
 ./.venv/bin/python eval/run_eval.py
 ```
 
-| Provider | Model | Score | Cross-file joins | Time |
-|---|---|---|---|---|
-| Groq free tier | `openai/gpt-oss-120b` | **17/17 (100%)** | 4/4 | 24s |
-| Local Ollama | `qwen2.5-coder:3b` | **14/17 (82%)** | 2/4 | 33s |
+| Provider | Model | License | Score | Cross-file joins | Time |
+|---|---|---|---|---|---|
+| Groq free tier | `openai/gpt-oss-120b` | Apache 2.0 | **17/17 (100%)** | 4/4 | 24s |
+| Local Ollama | `qwen2.5-coder:7b` | Apache 2.0 | **12/17 (71%)** | 2/4 | 275s |
+| Local Ollama | `qwen2.5-coder:1.5b` | Apache 2.0 | 8/17 (47%) | 2/4 | 32s |
 
-Same architecture and prompt; the gap sits almost entirely in cross-file joins, where the
-small model mishandles grain — summing every historical salary row instead of taking the
-latest per employee.
+Same architecture and prompt throughout; the gap sits almost entirely in cross-file joins,
+where smaller models mishandle grain — summing every historical salary row instead of
+taking the latest per employee.
 
 Covers all seven question types the prototype targets — aggregation, filtered aggregation,
 group-by, ranking, comparison, trend, cross-file join — plus two questions it is *supposed*
@@ -138,11 +142,44 @@ runs the system against everything it was *not* built for: a different domain
 **8/8 answered, 5 spot-checked against independent pandas computations and exact.** Both
 cross-sheet relationships were inferred with no configuration.
 
+## Licence and cost compliance
+
+Every runtime component is open-source-licensed and free, with no metered billing and no
+payment method on file:
+
+| Component | Licence / terms |
+|---|---|
+| `openai/gpt-oss-120b` (hosted model) | Apache 2.0, open weights |
+| Groq free tier (inference) | Free, no credit card, serves open-weights models only |
+| `qwen2.5-coder:7b` / `:1.5b` (local models) | Apache 2.0 |
+| Ollama | MIT |
+| Streamlit, pyarrow | Apache 2.0 |
+| DuckDB, openpyxl, Plotly, PyYAML | MIT |
+| pandas, NumPy, Altair | BSD |
+| Streamlit Community Cloud, GitHub | Free tier, no card |
+
+**One finding worth recording.** This project was originally benchmarked on
+`qwen2.5-coder:3b`, which ships under the **Qwen Research License** — non-commercial, and
+therefore not open source, despite downloading freely from the same registry as its
+siblings. It is the only size in that family that isn't Apache 2.0. It was replaced and
+the accuracy re-measured on the compliant model rather than keeping the better number.
+
+Note that `openai/gpt-oss-120b` is OpenAI's **open-weights** release under Apache 2.0,
+running on Groq's hardware — not the paid OpenAI API.
+
 ## Privacy
 
-Your rows never leave the machine running the app. What is sent to the model is the
-**schema**: table names, column names, types, null rates, cardinality, numeric ranges,
-and sample values **only** from low-cardinality categorical columns.
+**Your rows never go to the model.** What is sent is the **schema**: table names, column
+names, types, null rates, cardinality, numeric ranges, and sample values **only** from
+low-cardinality categorical columns.
+
+Where the rows themselves sit depends on how you run it:
+
+- **Local install** — nothing leaves your machine at all. Files, DuckDB and the model all
+  run locally
+- **Hosted demo** — files are parsed and queried on the server running the app; only the
+  schema reaches the inference provider
+- **Real deployment** — it would run on the customer's own infrastructure, which is the point
 
 Columns matching name, email, phone, address, salary, or free-text patterns never have
 their values sampled — see `PII_PATTERNS` in [`app/ingest.py`](app/ingest.py). This is
