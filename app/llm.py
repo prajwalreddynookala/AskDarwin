@@ -140,14 +140,31 @@ def _retry_after_seconds(exc, body: str, attempt: int) -> float:
 
 
 def _groq_key() -> Optional[str]:
+    """Environment first, then Streamlit secrets in any of the shapes people write.
+
+    A secrets.toml written with a `[secrets]` or `[general]` header nests the key one
+    level down, so a plain top-level lookup silently returns None and the app quietly
+    falls back to a local model. Checking the common sections turns a confusing
+    misconfiguration into a non-issue.
+    """
     key = os.environ.get("GROQ_API_KEY")
     if key:
         return key
-    try:  # Streamlit Cloud secrets
+    try:
         import streamlit as st
-        return st.secrets.get("GROQ_API_KEY")
+        top = st.secrets.get("GROQ_API_KEY")
+        if top:
+            return top
+        for section in ("secrets", "general", "groq"):
+            try:
+                nested = st.secrets[section].get("GROQ_API_KEY")
+            except Exception:
+                continue
+            if nested:
+                return nested
     except Exception:
-        return None
+        pass
+    return None
 
 
 def _groq_model(key: str) -> str:
