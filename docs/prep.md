@@ -283,6 +283,27 @@ latest salary row per employee rather than summing every historical revision.
 
 **Final: 100% (17/17) on `gpt-oss-120b`, 24 seconds.**
 
+**Finding 4: generality tested adversarially, not assumed.**
+
+The brief asks for "reasonably general analytical capability." A pass rate on questions I
+wrote, over data I designed, is weak evidence of that — so `eval/generality_probe.py` tests
+the system on everything it was *not* built for:
+
+| Dimension | Built for | Probe |
+|---|---|---|
+| Domain | HR | SaaS/e-commerce — customers, orders, support tickets |
+| Format | CSV | **multi-sheet `.xlsx`** — a code path never previously exercised |
+| Column names | clean snake_case | `Customer ID`, `Plan Type`, `CSAT Score` |
+| Sheet names | n/a | `Support Tickets` → normalised to a valid table identifier |
+| Questions | 17 I wrote and tuned against | 8 written fresh |
+
+**Result: 8/8 answered; 5 spot-checked against independent pandas computations and exact to
+the last decimal.** Both cross-sheet relationships inferred at 100% confidence with no
+configuration. The hardest — "average days between signup and first order" — required a
+per-customer `MIN` subquery, a join and a date difference, and matched at 103.2 days.
+
+This is stronger evidence than the eval score, precisely because none of it was built for.
+
 **The caveat I would state before anyone else does.** Seventeen questions is a smoke test,
 not a benchmark. A 100% pass rate here means *no regressions on the cases I thought to
 write* — it does not mean the system is generally accurate, and the number arrived only

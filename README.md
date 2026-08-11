@@ -124,6 +124,20 @@ regressions on the cases I thought to write, and the number arrived only after f
 bugs in the harness itself — including one gold query that was simply wrong, where the
 model's disagreeing answer turned out to be correct. See [`docs/prep.md`](docs/prep.md).
 
+### Generality probe
+
+Because a score on my own questions over my own data proves little, `eval/generality_probe.py`
+runs the system against everything it was *not* built for: a different domain
+(SaaS/e-commerce), a **multi-sheet `.xlsx`** rather than CSVs, messy column names
+(`Customer ID`, `CSAT Score`), and eight questions written fresh.
+
+```bash
+./.venv/bin/python eval/generality_probe.py
+```
+
+**8/8 answered, 5 spot-checked against independent pandas computations and exact.** Both
+cross-sheet relationships were inferred with no configuration.
+
 ## Privacy
 
 Your rows never leave the machine running the app. What is sent to the model is the
