@@ -4,10 +4,6 @@
 plain English, get an answer — with the query that produced it.
 
 **▶ Live demo: https://prajwalsaskdarwin.streamlit.app**
-(free hosting — if it has been idle it sleeps, and the first visit takes ~30s to wake)
-
-Built as a take-home exercise for the Darwinbox Product Management (Data) interview.
-Not affiliated with or endorsed by Darwinbox; the name is a prototype label.
 
 ---
 
