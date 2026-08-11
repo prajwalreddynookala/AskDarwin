@@ -7,14 +7,13 @@ Repo: **github.com/prajwalreddynookala/AskDarwin**
 
 **An HR Business Partner who cannot write a formula.** When she needs "attrition in Sales
 last two quarters by tenure band," she files a request, waits three days, and gets a static
-slide. The follow-up costs another three days. The real cost isn't waiting — it's the
+slide. The follow-up costs another three days. The real cost isn't the waiting — it's the
 **questions that never get asked**, because when asking is expensive people stop asking and
 the organisation runs on intuition.
 
-A second user shapes the design: **the analyst**, who is a queue rather than a skill gap,
-and who gets blamed when a number is wrong. The HRBP *asks*, the analyst *verifies* — which
-is exactly why the generated SQL is shown rather than hidden. For the HRBP alone I'd hide it
-as clutter; for the analyst alone I wouldn't need natural language at all.
+A second user shapes the design: **the analyst**, who is a queue rather than a skill gap, and
+who gets blamed when a number is wrong. The HRBP *asks*, the analyst *verifies* — which is
+exactly why the generated SQL is shown rather than hidden.
 
 ## Approach
 
@@ -38,19 +37,19 @@ payload, so privacy is inspectable rather than promised.
 system infers them from name similarity *and* real value overlap, then shows what it decided.
 A silently wrong join returns a confidently wrong number — the worst failure this tool has.
 
-**It refuses.** If the data can't answer the question it says so. A plausible wrong number is
-more dangerous than no number.
+**It refuses** when the data can't answer the question. A plausible wrong number is more
+dangerous than no number.
 
 ## How I know it works
 
 17 questions with hand-written gold queries, scored on execution accuracy: **100% on
 `gpt-oss-120b`, 71% on a local 7B.** A separate generality probe — different domain,
-multi-sheet Excel, messy column names, fresh questions — answered 8/8, five verified exactly
-against independent calculations. The harness earned its keep three times:
+multi-sheet Excel, messy columns, fresh questions — answered 8/8, five verified exactly. The
+harness earned its keep three times:
 
-- **It caught my regression.** Detailed prompt guidance dropped accuracy 71% → 65% and made
-  the model hallucinate table names; two lines instead got 82%. Small models degrade when you
-  add instructions — I'd have shipped that as an improvement.
+- **It caught my regression.** Detailed prompt guidance dropped accuracy 71% → 65%; two lines
+  instead got 82%. Small models degrade when you add instructions — I'd have shipped that as
+  an improvement.
 - **It caught a wrong gold query.** I'd asked for "offer-to-join conversion rate," a phrase
   with no single meaning, so no ground truth could be right and the model's disagreement was
   correct. **That is the clearest argument for a governed metric layer** — an undefined metric
@@ -65,11 +64,12 @@ Stated plainly: 17 questions is a smoke test, not a benchmark.
 ## What I'd measure
 
 North star: **trusted self-serve answers per HRBP per month** — answered *and* not escalated
-back to the analyst queue. Not "questions asked," which rewards confusion. The metric I'd
-watch is **SQL-expand rate**: high early means users are checking; staying high means they
-don't trust it; falling while acceptance holds means trust is earned. Guardrails: refusal rate
-(two-sided — too high is useless, too low is guessing), join-override rate as early warning
-that inference is failing, and requests deflected from the analyst queue as the number that
+back to the analyst queue. Not "questions asked," which rewards confusion.
+
+The metric I'd watch is **SQL-expand rate**: high early means users are checking; staying high
+means they don't trust it; falling while acceptance holds means trust is earned. Guardrails:
+refusal rate (two-sided — too high is useless, too low is guessing), join-override rate as
+early warning that inference is failing, and analyst requests deflected as the number that
 funds the product.
 
 ## What I'd build next
@@ -87,5 +87,5 @@ latest per employee — is exactly what a semantic layer fixes.
 the causal claims it implies, and the fairness exposure is real.
 
 **Cut deliberately:** follow-ups, auth, persistence, semantic layer, forecasting, data-quality
-repair (flagged, never silently fixed), visual polish. All open-weights Apache 2.0 models, no
-paid APIs or metered credits.
+repair (flagged, never silently fixed), visual polish. All models are open-weights and Apache
+2.0; no paid APIs or metered credits.
