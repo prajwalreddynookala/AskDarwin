@@ -126,7 +126,8 @@ to decline.
 **Read the 100% honestly:** 17 questions is a smoke test, not a benchmark. It means no
 regressions on the cases I thought to write, and the number arrived only after fixing two
 bugs in the harness itself — including one gold query that was simply wrong, where the
-model's disagreeing answer turned out to be correct. See [`docs/prep.md`](docs/prep.md).
+model's disagreeing answer turned out to be correct. The full account is in
+[`docs/writeup.md`](docs/writeup.md).
 
 ### Generality probe
 

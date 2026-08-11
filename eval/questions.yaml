@@ -105,8 +105,8 @@
 #
 # The defect was the question, not the system: "conversion rate" has no single meaning
 # without a definition, so no ground truth could be right. Rephrased to be unambiguous
-# and kept in the set. The original ambiguity is written up as the clearest argument in
-# this exercise for a governed metric layer — see docs/prep.md, Stage 9.
+# and kept in the set. The original ambiguity is the clearest argument in this exercise
+# for a governed metric layer, and is written up in docs/writeup.md.
 - id: q14
   category: cross_file_join
   question: What percentage of all candidates from each recruitment source went on to join?
