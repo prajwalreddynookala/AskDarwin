@@ -106,9 +106,23 @@ column names and row order — standard execution accuracy.
 ./.venv/bin/python eval/run_eval.py
 ```
 
-Covers all seven question types the prototype targets — aggregation, filtered
-aggregation, group-by, ranking, comparison, trend, cross-file join — plus two questions
-it is *supposed* to decline.
+| Provider | Model | Score | Cross-file joins | Time |
+|---|---|---|---|---|
+| Groq free tier | `openai/gpt-oss-120b` | **17/17 (100%)** | 4/4 | 24s |
+| Local Ollama | `qwen2.5-coder:3b` | **14/17 (82%)** | 2/4 | 33s |
+
+Same architecture and prompt; the gap sits almost entirely in cross-file joins, where the
+small model mishandles grain — summing every historical salary row instead of taking the
+latest per employee.
+
+Covers all seven question types the prototype targets — aggregation, filtered aggregation,
+group-by, ranking, comparison, trend, cross-file join — plus two questions it is *supposed*
+to decline.
+
+**Read the 100% honestly:** 17 questions is a smoke test, not a benchmark. It means no
+regressions on the cases I thought to write, and the number arrived only after fixing two
+bugs in the harness itself — including one gold query that was simply wrong, where the
+model's disagreeing answer turned out to be correct. See [`docs/prep.md`](docs/prep.md).
 
 ## Privacy
 

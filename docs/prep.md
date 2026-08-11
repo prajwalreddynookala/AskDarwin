@@ -240,24 +240,55 @@ Demo dataset: 5 files, 10,067 rows, spanning hiring → in-role → exit.
 4. **SELECT-only validation** — correctness guard *and* security guard, since generated SQL
    is about to execute. DuckDB additionally runs with external access disabled
 
-### The eval result — and the fix that made it worse
+### The eval result — three findings, in the order they happened
 
-| Attempt | Prompt | Score | Finding |
+**Finding 1: my prompt "fix" made accuracy worse.**
+
+| Attempt | Prompt | Score (local 3B) | Result |
 |---|---|---|---|
 | 1 | Baseline | **71%** (12/17) | Zero SQL errors. All failures semantic; 3 were *over-refusal* |
-| 2 | Detailed guidance + worked examples | **65%** (11/17) | **Regressed.** Broke two passing cases, started hallucinating table names |
-| 3 | Cut to two lines | **82%** (14/17) | Best. Over-refusal fixed without the noise |
+| 2 | Detailed guidance + worked examples | **65%** (11/17) | **Regressed.** Broke two passing cases, hallucinated table names |
+| 3 | Cut to two lines | **82%** (14/17) | Over-refusal fixed without the noise |
 
-**The lesson is counterintuitive: a 3B model gets *worse* when you add instructions.**
-Instruction volume trades against instruction adherence. Without the harness, attempt 2
-ships as an "improvement."
+A 3B model gets *worse* when you add instructions — instruction volume trades against
+instruction adherence. Without the harness, attempt 2 ships as an "improvement."
 
-**By category:** aggregation 2/2 · filtered aggregation 2/2 · comparison 2/2 · ranking 2/2 ·
-trend 1/1 · refusal 2/2 · **cross-file join 2/4**.
+**Finding 2: model size mattered most on exactly the category I predicted would be hard.**
+Same architecture, same prompt, two model sizes:
 
-**Remaining failures**, all cross-file grain problems: a SQL alias binder error; an
-integer-division bug in a conversion rate; and summing *all* historical salary rows instead
-of the latest per employee. That last one is the clearest argument for a semantic layer.
+| Provider | Model | Score | Cross-file joins |
+|---|---|---|---|
+| Local Ollama | `qwen2.5-coder:3b` | 82% | 2/4 |
+| Groq free tier | `openai/gpt-oss-120b` | 88% → **100%** | 2/4 → **4/4** |
+
+The larger model solved the grain problem the small one couldn't — correctly taking the
+latest salary row per employee rather than summing every historical revision.
+
+**Finding 3: two of the remaining "failures" were defects in my own test, not the system.**
+
+- **q12** — the model returned the requested averages *plus* a supporting row count. My
+  comparison demanded an exact measure count, so a more informative correct answer scored
+  as a failure. Relaxed to: every gold value must appear; extras are allowed.
+- **q14** — I asked for "offer-to-join conversion rate." My gold query divided joins by
+  *all candidates*, which is applicant-to-join. The model read it differently and was
+  right. My second attempt divided by those reaching an offer, which this dataset doesn't
+  model cleanly — two sources came out at 100%. The model's own answer also varied
+  between runs.
+
+  **The defect was the question.** "Conversion rate" has no single meaning without a
+  definition, so no ground truth could be correct. I rephrased it to be unambiguous and
+  kept it. **This is the single clearest argument in the whole exercise for a governed
+  metric layer** — an undefined metric makes a correct system disagree with its own test,
+  and in production it makes two teams disagree in a board meeting.
+
+**Final: 100% (17/17) on `gpt-oss-120b`, 24 seconds.**
+
+**The caveat I would state before anyone else does.** Seventeen questions is a smoke test,
+not a benchmark. A 100% pass rate here means *no regressions on the cases I thought to
+write* — it does not mean the system is generally accurate, and the number arrived only
+after I fixed two bugs in the harness itself. The honest claim is narrow: the architecture
+is sound, the failure modes are understood, and there is now a re-runnable check that
+catches regressions. Scaling the eval set is a v2 item.
 
 ---
 

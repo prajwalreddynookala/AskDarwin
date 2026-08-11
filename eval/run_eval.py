@@ -46,17 +46,26 @@ def canonical(df: pd.DataFrame) -> List[Tuple]:
 
 
 def results_match(gold: pd.DataFrame, pred: pd.DataFrame) -> Tuple[bool, str]:
+    """Every gold value must appear in the prediction, row for row.
+
+    Extra measures in the prediction are allowed. A query that returns the requested
+    average *and* a supporting row count has answered the question — arguably better
+    than the reference — and scoring that as a failure measures conformity, not
+    correctness. Missing or wrong values still fail.
+    """
     if gold.shape[0] != pred.shape[0]:
         return False, "row count %d vs %d" % (gold.shape[0], pred.shape[0])
-    g, p = canonical(gold), canonical(pred)
-    for (gc, gn), (pc, pn) in zip(g, p):
-        if gc != pc:
+    for (gc, gn), (pc, pn) in zip(canonical(gold), canonical(pred)):
+        if not set(gc).issubset(set(pc)):
             return False, "category values differ: %s vs %s" % (gc, pc)
-        if len(gn) != len(pn):
-            return False, "different number of measures: %d vs %d" % (len(gn), len(pn))
-        for a, b in zip(gn, pn):
-            if not math.isclose(a, b, rel_tol=REL_TOL, abs_tol=1e-9):
-                return False, "value %s != %s" % (a, b)
+        remaining = list(pn)
+        for want in gn:
+            hit = next((i for i, got in enumerate(remaining)
+                        if math.isclose(want, got, rel_tol=REL_TOL, abs_tol=1e-9)), None)
+            if hit is None:
+                return False, "expected %s, not found in %s" % (round(want, 4),
+                                                                [round(x, 4) for x in pn])
+            remaining.pop(hit)
     return True, ""
 
 

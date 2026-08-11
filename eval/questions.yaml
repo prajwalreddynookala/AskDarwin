@@ -97,12 +97,22 @@
     SELECT COUNT(*) AS employees_joined FROM employees
     WHERE EXTRACT(year FROM date_of_joining) = 2025
 
+# This question was originally phrased "offer-to-join conversion rate", and it was a bad
+# test — twice. My first gold query divided joins by *all* candidates, which is
+# applicant-to-join, and the model was right to read it differently. My second attempt
+# divided by those reaching an offer, which this dataset does not model cleanly (two
+# sources come out at 100%). The model's answer also changed between runs.
+#
+# The defect was the question, not the system: "conversion rate" has no single meaning
+# without a definition, so no ground truth could be right. Rephrased to be unambiguous
+# and kept in the set. The original ambiguity is written up as the clearest argument in
+# this exercise for a governed metric layer — see docs/prep.md, Stage 9.
 - id: q14
   category: cross_file_join
-  question: What is the offer-to-join conversion rate as a percentage for each recruitment source?
+  question: What percentage of all candidates from each recruitment source went on to join?
   gold_sql: >
     SELECT source,
-           COUNT(*) FILTER (WHERE joined_flag = 'Yes') * 100.0 / COUNT(*) AS conversion_pct
+           COUNT(*) FILTER (WHERE joined_flag = 'Yes') * 100.0 / COUNT(*) AS joined_pct
     FROM recruitment GROUP BY source
 
 - id: q15

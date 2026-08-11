@@ -10,6 +10,7 @@ The model receives the schema and the question. It never receives table rows.
 import json
 import os
 import re
+import time
 import urllib.error
 import urllib.request
 from typing import Dict, List, Optional, Tuple
@@ -17,11 +18,15 @@ from typing import Dict, List, Optional, Tuple
 GROQ_URL = "https://api.groq.com/openai/v1"
 OLLAMA_URL = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434")
 
+# Groq's edge rejects the default urllib User-Agent with a Cloudflare 403 (error 1010),
+# so every request sets one explicitly.
+USER_AGENT = "AskDarwin/1.0"
+
 # Preference order; the first one the provider actually serves wins. Groq deprecates
 # models periodically, so we resolve against the live catalogue instead of pinning.
 GROQ_MODEL_PREFERENCE = [
-    "openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3-32b",
-    "moonshotai/kimi-k2-instruct", "llama-3.3-70b-versatile", "llama-3.1-8b-instant",
+    "openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.6-27b",
+    "llama-3.3-70b-versatile", "llama-3.1-8b-instant",
 ]
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:3b")
 
@@ -81,19 +86,52 @@ class LLMError(Exception):
 
 # --------------------------------------------------------------- providers
 
-def _post_json(url: str, payload: Dict, headers: Optional[Dict] = None, timeout: int = 90) -> Dict:
+MAX_RATE_LIMIT_RETRIES = 3
+
+
+def _post_json(url: str, payload: Dict, headers: Optional[Dict] = None,
+               timeout: int = 90) -> Dict:
+    """POST with backoff on rate limits.
+
+    Free-tier inference is capped on tokens per minute, and a schema prompt is not
+    small. Rather than failing the user's question, wait for the window the provider
+    tells us about and try again.
+    """
     data = json.dumps(payload).encode("utf-8")
-    hdrs = {"Content-Type": "application/json"}
+    hdrs = {"Content-Type": "application/json", "User-Agent": USER_AGENT}
     hdrs.update(headers or {})
-    req = urllib.request.Request(url, data=data, headers=hdrs, method="POST")
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        body = exc.read().decode("utf-8", "replace")[:400]
-        raise LLMError("Provider returned HTTP %s: %s" % (exc.code, body))
-    except Exception as exc:
-        raise LLMError(str(exc))
+
+    for attempt in range(MAX_RATE_LIMIT_RETRIES):
+        req = urllib.request.Request(url, data=data, headers=hdrs, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", "replace")
+            if exc.code == 429 and attempt < MAX_RATE_LIMIT_RETRIES - 1:
+                time.sleep(_retry_after_seconds(exc, body, attempt))
+                continue
+            if exc.code == 429:
+                raise LLMError(
+                    "The free-tier rate limit is in effect. Wait a moment and ask again.")
+            raise LLMError("Provider returned HTTP %s: %s" % (exc.code, body[:300]))
+        except Exception as exc:
+            raise LLMError(str(exc))
+    raise LLMError("Provider did not respond.")
+
+
+def _retry_after_seconds(exc, body: str, attempt: int) -> float:
+    """Honour the provider's own wait hint; fall back to exponential backoff."""
+    header = exc.headers.get("retry-after") if getattr(exc, "headers", None) else None
+    if header:
+        try:
+            return min(float(header) + 0.5, 30.0)
+        except ValueError:
+            pass
+    match = re.search(r"try again in ([\d.]+)s", body, re.I)
+    if match:
+        return min(float(match.group(1)) + 0.5, 30.0)
+    return min(2.0 * (2 ** attempt), 30.0)
 
 
 def _groq_key() -> Optional[str]:
@@ -113,7 +151,8 @@ def _groq_model(key: str) -> str:
         return override
     try:
         req = urllib.request.Request(
-            GROQ_URL + "/models", headers={"Authorization": "Bearer " + key})
+            GROQ_URL + "/models",
+            headers={"Authorization": "Bearer " + key, "User-Agent": USER_AGENT})
         with urllib.request.urlopen(req, timeout=20) as resp:
             available = {m["id"] for m in json.loads(resp.read().decode())["data"]}
         for candidate in GROQ_MODEL_PREFERENCE:

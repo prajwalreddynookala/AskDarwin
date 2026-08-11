@@ -43,14 +43,26 @@ error back once, output sanitising, and SELECT-only validation — the correctne
 *and* the security guard, since generated SQL is about to execute.
 
 **Correctness is measured**, not asserted: 17 questions with hand-written gold queries,
-scored on execution accuracy. **82% on a local 3B model.** Aggregation, filtering, ranking,
-comparison, trend and refusal all pass; **cross-file joins are weakest (2/4)** — the hard
-category, where I expected to be weak.
+scored on execution accuracy. **100% on `gpt-oss-120b` (Groq free tier), 82% on a local 3B
+model** — same architecture and prompt, and the gap sits almost entirely in cross-file
+joins, the category I expected to be hardest.
 
-The harness's most useful catch was my own regression: adding detailed prompt guidance
-dropped accuracy from 71% to 65% and made the model hallucinate table names. Cutting it to
-two lines got 82%. **Small models degrade when you add instructions** — I'd have shipped
-that as an improvement.
+The harness earned its keep three times. It caught **my own regression** — adding detailed
+prompt guidance dropped accuracy from 71% to 65% and made the model hallucinate table
+names; cutting it to two lines got 82%. Small models degrade when you add instructions, and
+I'd have shipped that as an improvement.
+
+It also caught **two bugs in itself**. One question's gold query was simply wrong, and the
+model's disagreeing answer was the correct one. I'd asked for "offer-to-join conversion
+rate" — a phrase with no single meaning — so no ground truth could be right. **That is the
+clearest argument here for a governed metric layer:** an undefined metric makes a correct
+system disagree with its own test, and in production it makes two teams disagree in a board
+meeting.
+
+**Stated plainly: 17 questions is a smoke test, not a benchmark.** 100% means no
+regressions on cases I thought to write, and it arrived only after I fixed the harness.
+The narrow claim is what I'd defend — the architecture holds, the failure modes are
+understood, and regressions are now catchable.
 
 ## Cut deliberately
 
