@@ -38,20 +38,10 @@ none.
 
 ## How I know it works
 
-17 gold-query questions, execution accuracy: **100% on `gpt-oss-120b`, 71% on a local 7B.** A
-generality probe — new domain, multi-sheet Excel, messy columns — answered 8/8, five verified
-exactly. The harness caught three things:
-
-- **My regression.** Detailed prompt guidance dropped accuracy 71% → 65%; two lines got 82%.
-  Small models degrade when you add instructions.
-- **My wrong gold query.** "Offer-to-join conversion rate" has no single meaning, so no ground
-  truth could be right and the model's disagreement was correct. **That's the argument for a
-  governed metric layer:** an undefined metric makes a correct system disagree with its own
-  test, and two teams disagree in a board meeting.
-- **A licence violation.** My local model was non-commercial. I swapped it and re-measured
-  *downward*, 82% → 71%.
-
-17 questions is a smoke test, not a benchmark.
+17 questions with hand-written gold queries, scored on execution accuracy: **100% on
+`gpt-oss-120b`, 71% on a local 7B.** A separate probe on an unseen domain and a multi-sheet
+Excel answered 8/8, five verified exactly against independent calculations — though 17
+questions is a smoke test, not a benchmark.
 
 ## What I'd measure
 
